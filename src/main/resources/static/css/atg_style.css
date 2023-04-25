@@ -1,0 +1,164 @@
+
+
+/* 공통*/
+
+body{font-family: 'Noto Sans KR', sans-serif;  font-size:16px; font-weight: 400;}
+h3{font-size:24px; font-weight: 700; padding-bottom: 10px; color: #012970;}
+.mt50{margin-top: 50px;}
+.mt20{margin-top:20px}
+button{margin-left:5px;}
+h3.title{font-size:22px; color:#012970; font-weight: bold;}
+h2.title{font-size:24px; font-weight: 700; color: #012970;}
+.card-body{padding: 20px;}
+.label_name{font-weight:bold; position: relative; margin-left:10px;  margin-bottom: 10px; font-size:20px; text-indent: 10px;}
+.label_name:before{content: ""; display:block; width:6px; height: 6px; background: #ff5507; position:absolute; top:18px; left:0; float:left; border-radius: 6px;}
+.left_title{float:left;}
+.box2{float:left; width:100%; height: 500px; display: block;}
+.box{float:left; display:block; height: 100px;}
+.box_end{clear:both; float:left; display:block; height: 100px;}
+.row{padding: 0; margin: 0;}
+.page-link{font-size:14px; color: #444;}
+button.btn-normal{background:#012970; color:#fff}
+.btn_win{background:#7b4fe5; color:#fff}
+.btn-save{background:#012970;}
+.form-select
+div.title_div{border:1px solid #012970;}
+div.card{border:1px solid #9aadcd;}
+div.card{border-radius: 0;}
+.title_div{max-width:300px; background:#012970}
+.left{float: left;}
+.form-select, .form-control{font-size: 18px;}
+.btn{font-size:18px; padding: 7px 15px;}
+table input{width:20px!important; height: 20px !important;}
+
+
+i{margin-right:6px;}
+button.btn-normal:hover, button.btn-normal:active{background:#466295; opacity: 1; color:#fff}
+.form-select:hover, .form-select:active{border:2px solid #ff5507}
+#gridCheck1 {font-size: 20px; width:20px !important; height: 20px !important;}
+.clear{clear: both;}
+.sidebar-nav .nav-link{font-size: 16px; font-weight: 500;}
+
+/* 기본정보 조회 */
+#section_01 .button_box{width:100%; display: flex; float: left;}
+#section_02 .button_wrap{display:flex; justify-content: flex-end;}
+#section_01 .title_warp{position:relative; width:300px; height: 50px; background: #012970; padding:10px 16px; margin-top:20px;}
+#section_01 .title_warp > div.tri{position:absolute; width: 0px; height: 0px; border-top:50px solid transparent; border-left: 50px solid transparent; border-right: 50px solid transparent; border-bottom:50px solid #012970; top:-50px; left:250px; z-index:100;}
+#section_01 h3.title{color: #fff; font-weight: normal;}
+
+
+table {width:auto;}
+
+/* 신규 등록 */
+div.form_box{width:100%; background:#eff1f3; display: inline-block; padding:20px; border-top:1px solid #012970; margin-top: 20px;}
+
+/* 데이터테이블*/
+#data_table, #data_table_page{font-size:17px}
+#data_table th, tr{width:auto; }
+#data_table .button_wrap{display:flex; justify-content: flex-end;}
+#data_table .dataTable-table{margin-top:20px;}
+#data_table tr.colum{background:#eff1f3; text-align: center;}
+#data_table .dataTable-table > tbody > tr > th{width:300px; vertical-align: middle; padding:14px; border-right: 1px solid  rgb(179, 179, 179); border-top: 1px solid #012970; text-align: center;}
+#data_table tbody > tr > td{border-right: 1px solid  rgb(179, 179, 179);}
+#data_table tbody > tr:hover {background: grey; color:#fff}
+#data_table tr.colum{border-right: 1px solid  rgb(179, 179, 179);}
+#data_table .dataTable-table{text-align: center;}
+
+/* 레벨 아이콘 */
+
+#section_02 .level{font-weight:bold; position: relative; margin-left:10px;  margin-bottom: 10px; font-size:18px; text-indent: 15px;}
+#section_02 .level:before{content: ""; display:block; width:20px; height: 20px; background: #a007ff; position:absolute; top:12px; left:0; float:left; border-radius: 20px;}
+#section_02 .level_01:before{background:#2ad10c}
+#section_02 .level_02:before{background:#ffc107}
+#section_02 .level_03:before{background:#ff7907}
+#section_02 .level_04:before{background:#f33535}
+
+/* 설비가중치, 설비별 수명평가 */
+#section_04 .title_warp{position:relative; width:400px; height: 50px; background: #012970; padding:10px 16px; margin-top:20px;}
+#section_04 .title_warp > div.tri{position:absolute; width: 0px; height: 0px; border-top:50px solid transparent; border-left: 50px solid transparent; border-right: 50px solid transparent; border-bottom:50px solid #012970; top:-50px; left:350px; z-index:100;}
+#section_04 h3.title{color: #fff; font-weight: normal;}
+#section_04 div.button_box{width:100%; display: flex; float: left;}
+
+
+#section_04 .grade_wrap{min-height: 260px; display: block;}
+#section_04 .grade_wrap_box{float: left; width:31.333%; min-height: 250px;  margin-top:70px; margin-left: 2%;}
+#section_04 .grade_wrap_box > div.card {border: 2px solid #ff8673;}
+
+
+#section_04 > div.grade > div.grade_txt{font-size: 24px;}
+#section_04 > div.grade_txt > p.grade_txt{font-size: 30px; font-weight: 700; padding:40px 0 0}
+#section_04 .grade_wrap > div.grade{display:flex; float:left;flex-direction: row; justify-content: center; align-items: center; width:46%; background: #e7e7e7; height: 200px; text-align: center;}
+#section_04 .grade_wrap > div.grade_right{margin-left: 2%; width:50%;}
+#section_04 .grade_wrap > div.grade div.left > p.txt_A{color:rgb(46, 180, 12); font-size: 30px; font-weight: 700;}
+#section_04 .grade_wrap > div.grade div.left > p.txt_C{color:#ff7907; font-size: 30px; font-weight: 700;}
+#section_04 .grade_wrap > div.grade div.left > p.txt_D{color:#ff071e; font-size: 30px; font-weight: 700;}
+#section_04 > div.grade_txt > span.txt{font-size: 18px; display: inline-block;}
+#section_04 .grade_wrap > div.grade div.right > p.text_result{color:#334bfb; font-size: 26px; font-weight: 700;}
+#section_04 > div.grade_txt span.txt{margin-top: 10px;}
+
+
+
+
+/* 수명평가 설문결과 등록 테이블*/
+
+#survey_data_table{width:100%; overflow: scroll; font-size:17px}
+#survey_data_table table th{vertical-align: middle; text-align: center; border: 1px solid #d9d9d9;}
+#survey_data_table table th {background:#eff1f3;}
+
+
+#survey_data_table > table > thead > tr.width > th{border: 1px solid red;}
+#survey_data_table table > tr.txt_input > th{max-width: 50px;}
+#survey_data_table .button_wrap{position: absolute; right:50px; top:30px}
+#survey_data_table table tbody > tr.row_q2 td.bold{color:#4154f1; font-weight: 700; background: #eff1f3;}
+#survey_data_table table tbody > tr.row_q3 td.bold{color:#f14141; font-weight: 700; background: #eff1f3;}
+#survey_data_table table tbody > tr > td.text_left{text-align: left; display: revert; width:500px; min-width:500px }
+#survey_data_table table td.value_01{background: #ffd68a38; }
+#survey_data_table table tr.line > td, #survey_data_table table td.border{border-bottom: 1px solid #9b9b9b !important}
+#survey_data_table table td.border{background: #e7f9ea;  width:100px}
+
+
+/* 설비별 수명평가 테이블*/
+
+#grade_table{width:100%; overflow: scroll; font-size:18px}
+#grade_table table th,  #grade_table table td{vertical-align: middle; text-align: center; border: 1px solid #d9d9d9;}
+#grade_table table th {background:#eff1f3; line-height: 60px;}
+#grade_table table > tr.txt_input > th{max-width: 50px;}
+#grade_table .button_wrap{position: absolute; right:50px; top:30px}
+#grade_table table tbody > tr.row_q2 td.bold{color:#4154f1; font-weight: 700; background: #eff1f3;}
+#grade_table table tbody > tr.row_q3 td.bold{color:#f14141; font-weight: 700; background: #eff1f3;}
+#grade_table table tbody > tr > td.text_left{text-align: left;}
+#grade_table table td.value_01{background: #ffd68a38;}
+#grade_table table tbody tr {border-bottom: 2px solid red;}
+
+#grade_table table > tbody tr > td.line:first-child{background:#e4efe9 ; font-weight: 700; line-height: 100px;}
+#grade_table table > tbody tr > td.sum{background: #eff1f3; font-weight: 700; line-height: 50px;}
+#grade_table table > tbody tr > td.sum_result{font-size:18px;  color:#f00; font-weight: 700;}
+#grade_table table > tbody tr > td.rate{background:#ffefc4; text-align:center; }
+#grade_table table > tbody tr > td.line, #grade_table table > tbody tr.line_2 > td{border-bottom: 1px solid #738976 !important;}
+
+
+
+
+
+
+
+/* 반응형 */
+
+
+@media screen and (max-width: 1280px) {
+    #section_04 .grade{width:100%; }
+    #section_04 div.right{margin-left:0; margin-top: 10px;}
+    #section_04 .left > .grade_txt, #section_04 .right >.grade_txt{padding:2.5rem 0 0}
+
+}
+
+@media screen and (max-width: 768px) {
+
+    #survey_data_table .button_wrap{top:80px; left:20px}
+    #survey_data_table .table{margin-top: 70px;}
+    #section_04 .grade_wrap_box{width:100%; margin:0}
+
+
+
+
+}

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:visibility="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header"></head>
+
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<!--main-->
+<main id="main" class="main">
+  <section class="section">
+    <div class="row">
+
+      <!--기본정보 조회-->
+      <div id="section_04">
+        <div class="col-md-8 left">
+          <form class="m-t" role="form" action="/lifeEvaluations/findOne" id="findOne" method="get">
+            <div class="title_warp">
+              <h3 class="title">설비별 수명평가</h3>
+              <div class="tri"></div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <!-- 검색항목 -->
+                <div class="grade_wrap">
+                  <div class="row col-md-6 box">
+                    <label class="col-form-label label_name">기지명</label>
+                    <div class="col-12">
+                      <select class="form-select" aria-label="Default select"
+                              name="invenName" id="invenName" placeholder="기지명" required>
+                        <option value="" selected>==선택해주세요==</option>
+<!--                        <option value="생산운영처" >생산운영처</option>-->
+                        <option value="평택기지" >평택기지</option>
+                        <option value="인천기지" >인천기지</option>
+                        <option value="통영기지" >통영기지</option>
+                        <option value="삼척기지" >삼척기지</option>
+                      </select>
+                      <!--                                    <input type="text" name="facilityName" id="facilityName" class="form-control" placeholder="설비명" required="required"/>-->
+                    </div>
+                  </div>
+                  <div class="row col-md-6 box">
+                    <label class="col-form-label label_name">위치</label>
+                    <div class="col-12">
+                      <select class="form-select" aria-label="Default select"
+                              name="locateName" id="locateName"  required>
+                        <option value="" selected>==선택해주세요==</option>
+                        <option value="1공장" >1공장</option>
+                        <option value="2공장" >2공장</option>
+                        <option value="3공장" >3공장</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row col-md-6 box_end">
+                    <label class="col-form-label label_name">설비명</label>
+                    <div class="col-12">
+                      <select class="form-select" aria-label="Default select"
+                              name="facilityName" id="facilityName" placeholder="설비명" required>
+                        <option value="" selected>==선택해주세요==</option>
+                        <option value="HP LNG 펌프">HP LNG 펌프</option>
+                        <option value="LP LNG 펌프">LP LNG 펌프</option>
+                        <option value="고압LNG펌프">고압LNG펌프</option>
+                        <option value="저압LNG펌프">저압LNG펌프</option>
+                        <option value="BOG 압축기">BOG 압축기</option>
+                        <option value="해수펌프">해수펌프</option>
+                        <option value="해수식 기화기">해수식 기화기</option>
+                      </select>
+                      <!--                                    <input type="text" name="facilityName" id="facilityName" class="form-control" placeholder="설비명" required="required"/>-->
+                    </div>
+                  </div>
+                  <div class="row col-md-6 box">
+                    <label class="col-form-label label_name">설치코드</label>
+                    <div class="col-12">
+                      <select class="form-select" aria-label="Default select"
+                              name="installCode" id="installCode" placeholder="설치코드" required>
+                        <option value="" selected>==선택해주세요==</option>
+                        <option value="st01">st01</option>
+                        <option value="st02">st02</option>
+                        <option value="st03">st03</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="button_box justify-content-center mt20">
+                    <button type="submit" class="btn btn-normal"><i
+                            class="bi bi-search"></i>조회</button>
+
+
+                    <button type="button" class="btn btn-normal" onclick="confirm()"><i class="bi bi-check-lg"></i>결과확인</button>
+
+
+                    <button onclick="registerDB()" type="button" class="btn btn-normal"><i
+                            class="bi bi-server"></i>DB 반영</button>
+
+                  </div>
+                  <!--// 검색항목 -->
+
+                </div><!-- //grade_wrap -->
+
+              </div>
+              <!--//card-body-->
+            </div><!-- card -->
+          </form>
+        </div>
+        <!--// col-lg-8-->
+
+        <div class="col-md-4 left grade_wrap_box" id="resultBox" style="display: none">
+          <div class="card">
+            <div class="card-body">
+              <div class="grade_wrap">
+                <h3>수명평가 결과</h3>
+                <div class="grade">
+                  <div class="left">
+                  <p class="grade_txt txt_A" id="resultGrade" th:text="${lifeEvaluations.getResultGrade()}"></p>
+                  <span class="txt">평가 등급결과</span>
+                 </div><!--left-->
+                </div>
+                <div class="grade grade_right">
+                  <div class="right">
+                  <p class="grade_txt text_result" id="resultStatus" th:text="${lifeEvaluations.getResultStatus()}"></p>
+                  <span class="txt">설비운영</span>
+                </div><!--right-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--//grade_wrap_box-->
+        </div>
+        <!--//col-lg-4-->
+        <!--// 기본정보 조회_section_01-->
+      </div>
+      <!--//section_04-->
+
+
+
+
+      <!-- 수명평가표 테이블 -->
+      <div class="col-lg-12" id="grade_section">
+        <div class="card">
+          <div class="card-body">
+            <h3>수명평가 설문표</h3>
+            <!--수명평가표 테이블-->
+            <div id="grade_table">
+              <div
+                      class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                <!--페이지 검색
+                <div class="dataTable-dropdown"><label><select class="dataTable-selector">
+                      <option value="5">5</option>
+                      <option value="10" selected="">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                      <option value="25">25</option>
+                    </select> entries per page</label>
+                </div>-->
+
+              </div>
+              <!--테이블-->
+              <div class="dataTable-container mt20">
+                <table class="table datatable dataTable-table" id="">
+                  <thead>
+                  <tr class="title">
+                    <th>평가항목</th>
+                    <th>단위</th>
+                    <th>매우나쁨</th>
+                    <th>나쁨</th>
+                    <th>보통</th>
+                    <th>좋음</th>
+                    <th>매우좋음</th>
+                    <th>평점</th>
+                    <th>가중치</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="line" rowspan="2">성능1 (유량)</td>
+                    <td class="line" rowspan="2">t/h</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(0).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(0).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(0).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(0).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(0).getGradeExcel()}"></td>
+                    <td style="display: none" class="rate" id="infoSeqHidden" th:text="${facilityEvaluationGrades.get(0).getInfoSeq().getInfoSeq()}"
+                        th:value="${facilityEvaluationGrades.get(0).getInfoSeq()}" th:name="${facilityEvaluationGrades.get(0).getInfoSeq()}"
+                    ></td>
+                    <td class="line" rowspan="2" id="score1" name="score1"></td>
+                    <td class="line" rowspan="2" th:id="w1" th:name="w1" th:text="${surveyQuestions.get(0).getW1()}" th:value="${surveyQuestions.get(0).getW1()}"></td>
+                    <td style="display: none" class="line" rowspan="2" id="facilityNameHidden"  th:text="${surveyQuestions.get(0).getFacilityName()}" th:value="${surveyQuestions.get(0).getFacilityName()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row1" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row1" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row1" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row1" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row1" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="line" rowspan="2">성능2 (압력)</td>
+                    <td class="line" rowspan="2">MPa</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(1).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(1).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(1).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(1).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(1).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score2" name="score2"></td>
+                    <td class="line" rowspan="2" th:id="w2" th:name="w2" th:text="${surveyQuestions.get(0).getW2()}" th:value="${surveyQuestions.get(0).getW2()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row2" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row2" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row2" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row2" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row2" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="line" rowspan="2">펌프 효율</td>
+                    <td class="line" rowspan="2">%</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(2).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(2).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(2).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(2).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(2).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score3" name="score3"></td>
+                    <td class="line" rowspan="2" id="w3" name="w3" th:text="${surveyQuestions.get(0).getW3()}" th:value="${surveyQuestions.get(0).getW3()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row3" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row3" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row3" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row3" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row3" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="line" rowspan="2">모터 효율</td>
+                    <td class="line" rowspan="2">%</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(3).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(3).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(3).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(3).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(3).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score4" name="score4"></td>
+                    <td class="line" rowspan="2" id="w4" name="w4" th:text="${surveyQuestions.get(0).getW4()}" th:value="${surveyQuestions.get(0).getW4()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row4" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row4" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row4" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row4" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row4" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="line" rowspan="2">진동</td>
+                    <td class="line" rowspan="2">mm/s</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(4).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(4).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(4).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(4).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(4).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score5" name="score5"></td>
+                    <td class="line" rowspan="2" id="w5" name="w5" th:text="${surveyQuestions.get(0).getW5()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row5" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row5" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row5" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row5" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row5" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="line" rowspan="2">전압</td>
+                    <td class="line" rowspan="2">V</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(5).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(5).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(5).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(5).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(5).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score6" name="score6"></td>
+                    <td class="line" rowspan="2" id="w6" name="w6" th:text="${surveyQuestions.get(0).getW6()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row6" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row6" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row6" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row6" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row6" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="line" rowspan="2">전압 불평형</td>
+                    <td class="line" rowspan="2">%</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(6).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(6).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(6).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(6).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(6).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score7" name="score7"></td>
+                    <td class="line" rowspan="2" id="w7" name="w7" th:text="${surveyQuestions.get(0).getW7()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row7" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row7" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row7" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row7" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row7" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td class="line" rowspan="2">전류 불평형</td>
+                    <td class="line" rowspan="2">%</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(7).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(7).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(7).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(7).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(7).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score8" name="score8"></td>
+                    <td class="line" rowspan="2" id="w8" name="w8" th:text="${surveyQuestions.get(0).getW8()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row8" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row8" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row8" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row8" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row8" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="line" rowspan="2">과전류</td>
+                    <td class="line" rowspan="2">%</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(8).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(8).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(8).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(8).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(8).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score9" name="score9"></td>
+                    <td class="line" rowspan="2" id="w9" name="w9" th:text="${surveyQuestions.get(0).getW9()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row9" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row9" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row9" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row9" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row9" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+
+<!--                  <tr>-->
+<!--                    <td class="line" rowspan="2">Run-Out Upper Shaft</td>-->
+<!--                    <td class="line" rowspan="2">mm</td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradePoor()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeBad()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeGeneral()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeGood()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeExcel()}"></td>-->
+<!--                    <td class="line" rowspan="2" id="score10" name="score10"></td>-->
+<!--                    <td class="line" rowspan="2" id="w10" name="w10" th:text="${surveyQuestions.get(0).getW10()}"></td>-->
+<!--                  </tr>-->
+<!--                  <tr class="line_2">-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="1" name="row10" onclick="checkOnlyOne(this,name)" >-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="2" name="row10" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="3" name="row10" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="4" name="row10" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="5" name="row10" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                  </tr>-->
+
+<!--                  <tr>-->
+<!--                    <td class="line" rowspan="2">Run-Out Lower Shaft</td>-->
+<!--                    <td class="line" rowspan="2">mm</td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradePoor()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeBad()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeGeneral()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeGood()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeExcel()}"></td>-->
+<!--                    <td class="line" rowspan="2" id="score11" name="score11"></td>-->
+<!--                    <td class="line" rowspan="2" id="w11" name="w11" th:text="${surveyQuestions.get(0).getW11()}"></td>-->
+<!--                  </tr>-->
+<!--                  <tr class="line_2">-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="1" name="row11" onclick="checkOnlyOne(this,name)" >-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="2" name="row11" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="3" name="row11" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="4" name="row11" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="5" name="row11" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                  </tr>-->
+
+                  <tr>
+                    <td class="line" rowspan="2">Run-Out Motor Rotor</td>
+                    <td class="line" rowspan="2">mm</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(9).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score10" name="score10"></td>
+                    <td class="line" rowspan="2" id="w10" name="w10" th:text="${surveyQuestions.get(0).getW10()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row10" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row10" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row10" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row10" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row10" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="line" rowspan="2">절연저항시험</td>
+                    <td class="line" rowspan="2">mm</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(10).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score11" name="score11"></td>
+                    <td class="line" rowspan="2" id="w11" name="w11" th:text="${surveyQuestions.get(0).getW11()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row11" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row11" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row11" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row11" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row11" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+<!--                  <tr>-->
+<!--                    <td class="line" rowspan="2">서지검사</td>-->
+<!--                    <td class="line" rowspan="2">V</td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradePoor()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeBad()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeGeneral()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeGood()}"></td>-->
+<!--                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeExcel()}"></td>-->
+<!--                    <td class="line" rowspan="2" id="score14" name="score14"></td>-->
+<!--                    <td class="line" rowspan="2" id="w14" name="w14" th:text="${surveyQuestions.get(0).getW14()}"></td>-->
+<!--                  </tr>-->
+<!--                  <tr class="line_2">-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="1" name="row14" onclick="checkOnlyOne(this,name)" >-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="2" name="row14" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="3" name="row14" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="4" name="row14" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                    <td><input class="form-check-input" type="checkbox" value="5" name="row14" onclick="checkOnlyOne(this,name)">-->
+<!--                    </td>-->
+<!--                  </tr>-->
+
+                  <tr>
+                    <td class="line" rowspan="2">육안검사(부식/긁힘)</td>
+                    <td class="line" rowspan="2">-</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(11).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score12" name="score12"></td>
+                    <td class="line" rowspan="2" id="w12" name="w11" th:text="${surveyQuestions.get(0).getW12()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row12" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row12" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row12" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row12" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row12" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="line" rowspan="2">마모/치수</td>
+                    <td class="line" rowspan="2">mm</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(12).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(12).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(12).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(12).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(12).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score13" name="score13"></td>
+                    <td class="line" rowspan="2" id="w13" name="w13" th:text="${surveyQuestions.get(0).getW13()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row13" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row13" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row13" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row13" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row13" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="line" rowspan="2">비파괴 시험</td>
+                    <td class="line" rowspan="2">-</td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(13).getGradePoor()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(13).getGradeBad()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(13).getGradeGeneral()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(13).getGradeGood()}"></td>
+                    <td class="rate" th:text="${facilityEvaluationGrades.get(13).getGradeExcel()}"></td>
+                    <td class="line" rowspan="2" id="score14" name="score14"></td>
+                    <td class="line" rowspan="2" id="w14" name="w14" th:text="${surveyQuestions.get(0).getW14()}"></td>
+                  </tr>
+                  <tr class="line_2">
+                    <td><input class="form-check-input" type="checkbox" value="1" name="row14" onclick="checkOnlyOne(this,name)" >
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="2" name="row14" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="3" name="row14" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="4" name="row14" onclick="checkOnlyOne(this,name)">
+                    </td>
+                    <td><input class="form-check-input" type="checkbox" value="5" name="row14" onclick="checkOnlyOne(this,name)">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="sum" colspan="7">수명평가점</td>
+                    <td class="sum_result" colspan="2" id="sumResult"></td>
+                  </tr>
+
+
+
+                  </tbody>
+                </table>
+              </div>
+
+              <!--//data_table_page-->
+
+
+            </div>
+            <!--//data_table-->
+          </div>
+          <!--//card-body-->
+        </div>
+      </div>
+      <!--//테이블_section_03-->
+    </div>
+    </div>
+  </section>
+  <!--//class="section"-->
+
+
+
+</main><!-- End #main -->
+
+<div th:replace="fragments/footer :: footer"/>
+</body>
+
+<script>
+
+  let obj = new Object();
+
+  window.onload = function () {
+    // let getVal = JSON.parse(localStorage.getItem("cast"));
+    //
+    if (document.getElementById("resultGrade").innerText == 'A') {
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_A")
+      document.getElementById("resultBox").style.display = 'block';
+    } else if (document.getElementById("resultGrade").innerText == 'B') {
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_A")
+      document.getElementById("resultBox").style.display = 'block';
+    } else if (document.getElementById("resultGrade").innerText == 'C') {
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_C")
+      document.getElementById("resultBox").style.display = 'block';
+    } else if (document.getElementById("resultGrade").innerText == 'D') {
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_D")
+      document.getElementById("resultBox").style.display = 'block';
+    } else if (document.getElementById("resultGrade").innerText == 'E') {
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_D")
+      document.getElementById("resultBox").style.display = 'block';
+    }
+
+
+    }
+
+
+
+
+  function checkOnlyOne(element,name) {
+    const checkboxes = document.getElementsByName(name);
+    checkboxes.forEach((cb) => {
+      cb.checked = false;
+    })
+    element.checked = true;
+  }
+
+  function confirm() {
+    // let n=0;
+    // let rowA = "row" + n;
+    // let scoreA = "score" +n;
+
+    // for(n=0; n<16; n++)
+    //   document.getElementById(scoreA).innerText = $("input:checkbox[name=row1]:checked").val();
+
+    let resultGrade;
+
+    let s1 = document.getElementById("score1").innerText = $("input:checkbox[name=row1]:checked").val();
+    let s2 = document.getElementById("score2").innerText = $("input:checkbox[name=row2]:checked").val();
+    let s3 = document.getElementById("score3").innerText = $("input:checkbox[name=row3]:checked").val();
+    let s4 = document.getElementById("score4").innerText = $("input:checkbox[name=row4]:checked").val();
+    let s5 = document.getElementById("score5").innerText = $("input:checkbox[name=row5]:checked").val();
+    let s6 = document.getElementById("score6").innerText = $("input:checkbox[name=row6]:checked").val();
+    let s7 = document.getElementById("score7").innerText = $("input:checkbox[name=row7]:checked").val();
+    let s8 = document.getElementById("score8").innerText = $("input:checkbox[name=row8]:checked").val();
+    let s9 = document.getElementById("score9").innerText = $("input:checkbox[name=row9]:checked").val();
+    let s10 = document.getElementById("score10").innerText = $("input:checkbox[name=row10]:checked").val();
+    let s11 = document.getElementById("score11").innerText = $("input:checkbox[name=row11]:checked").val();
+    let s12 = document.getElementById("score12").innerText = $("input:checkbox[name=row12]:checked").val();
+    let s13 = document.getElementById("score13").innerText = $("input:checkbox[name=row13]:checked").val();
+    let s14 = document.getElementById("score14").innerText = $("input:checkbox[name=row14]:checked").val();
+    // let s15 = document.getElementById("score15").innerText = $("input:checkbox[name=row15]:checked").val();
+    // let s16 = document.getElementById("score16").innerText = $("input:checkbox[name=row16]:checked").val();
+    // let s17 = document.getElementById("score17").innerText = $("input:checkbox[name=row17]:checked").val();
+
+    //document.getElementsByName("w1").values();
+    //document.getElementById("resultGrade").innerText
+
+    let resultScore = (s1 * document.getElementById("w1").innerText + s2 * document.getElementById("w2").innerText + s3 * document.getElementById("w3").innerText + s4 * document.getElementById("w4").innerText + s5 * document.getElementById("w5").innerText +
+            s6 * document.getElementById("w6").innerText + s7 * document.getElementById("w7").innerText + s8 * document.getElementById("w8").innerText + s9 * document.getElementById("w9").innerText + s10 * document.getElementById("w10").innerText + s11 * document.getElementById("w11").innerText
+           + s12 * document.getElementById("w12").innerText + s13 * document.getElementById("w13").innerText + s14 * document.getElementById("w14").innerText) / 5;
+
+    if (resultScore >= 0.9) {
+      document.getElementById("resultGrade").setAttribute("value", 'A')
+      document.getElementById("resultGrade").innerText = 'A'
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_A")
+
+      document.getElementById("resultStatus").setAttribute("value", '지속운영')
+      document.getElementById("resultStatus").innerText = '지속운영'
+    } else if (resultScore < 0.9 && resultScore > 0.7) {
+      document.getElementById("resultGrade").setAttribute("value", 'B')
+      document.getElementById("resultGrade").innerText = 'B'
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_A")
+
+      document.getElementById("resultStatus").setAttribute("value", '상태감시 및 검사')
+      document.getElementById("resultStatus").innerText = '상태감시 및 검사'
+    } else if (resultScore < 0.7 && resultScore > 0.5) {
+      document.getElementById("resultGrade").setAttribute("value", 'C')
+      document.getElementById("resultGrade").innerText = 'C'
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_C")
+
+      document.getElementById("resultStatus").setAttribute("value", '수리')
+      document.getElementById("resultStatus").innerText = '수리'
+    } else if (resultScore < 0.5 && resultScore > 0.2) {
+      document.getElementById("resultGrade").setAttribute("value", 'D')
+      document.getElementById("resultGrade").innerText = 'D'
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_D")
+
+      document.getElementById("resultStatus").setAttribute("value", '부분교체')
+      document.getElementById("resultStatus").innerText = '부분교체'
+    } else if (resultScore < 0.2) {
+      document.getElementById("resultGrade").setAttribute("value", 'E')
+      document.getElementById("resultGrade").innerText = 'E'
+      document.getElementById("resultGrade").setAttribute("class", "grade_txt txt_D")
+
+      document.getElementById("resultStatus").setAttribute("value", '즉시교체/폐기')
+      document.getElementById("resultStatus").innerText = '즉시교체/폐기'
+    }
+
+    let infoSeq = new Object();
+    infoSeq.infoSeq = document.getElementById("infoSeqHidden").innerHTML;
+
+    //obj.resultSeq = null;
+    obj.resultGrade = document.getElementById("resultGrade").innerText;
+    obj.resultStatus = document.getElementById("resultStatus").innerText;
+    obj.infoSeq = infoSeq;
+
+    let resultP = resultScore * 100;
+
+    if(resultP > 100) resultP = 100;
+    else if(resultP > 97.9) resultP =100;
+
+    let resultW =  resultP.toFixed(2).toString() + '%'
+
+
+
+    document.getElementById("sumResult").setAttribute('value',resultW);
+    document.getElementById("sumResult").innerText = resultW;
+  }
+
+
+    function registerDB() {
+      $.ajax({
+        url: "/lifeEvaluations",
+        type: "POST",
+        //traditional: true, // ajax 배열 넘기기 옵션
+        dataType: "json",
+        processData: true,
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(obj),
+        //data: {"objRegister" : objRegister},
+        success: function (data) {
+          if (data == 1) {
+            alert("등록 성공");
+          } else {
+            alert("등록 실패!");
+          }
+        }
+      });
+      //setTimeout("location.reload()", 300);
+    }
+
+</script>
+
+</html>

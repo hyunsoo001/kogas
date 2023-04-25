@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:border-left="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header"/>
+
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<!--main-->
+<!--main-->
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+
+            <!--기본정보 조회-->
+            <div class="col-lg-12" id="section_04">
+                <form class="m-t" role="form" action="/surveyQuestions/findOne" id="findOne" method="get">
+                    <div class="title_warp" ><h3 class="title">설비별 수명평가항목 가중치 설문지</h3>
+                        <div class="tri"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">설비명</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="facilityName3" onchange="selChange(this)"
+                                            id="facilityName3" placeholder="설비명" th:value="${facilityName}" required>
+                                        <option value="">==선택해주세요==</option>
+                                        <option value="HP LNG 펌프">HP LNG 펌프</option>
+                                        <option value="LP LNG 펌프">LP LNG 펌프</option>
+                                        <option value="고압LNG펌프">고압LNG펌프</option>
+                                        <option value="저압LNG펌프">저압LNG펌프</option>
+                                        <option value="BOG 압축기">BOG 압축기</option>
+                                        <option value="해수펌프">해수펌프</option>
+                                        <option value="해수식 기화기">해수식 기화기</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="facilityName" id="facilityName" class="form-control" placeholder="설비명" required="required"/>-->
+                                </div>
+                            </div>
+                            <!--              <div class="row col-md-3 box">-->
+                            <!--                <label class="col-form-label label_name">설치형태</label>-->
+                            <!--                <div class="col-12">-->
+                            <!--                  <select class="form-select" aria-label="Default select" name="installName" id="installName" placeholder="설치형태" required>-->
+                            <!--                    <option value="" selected>==전체==</option>-->
+                            <!--                    <option value="공통">공통</option>-->
+                            <!--                    <option value="외부식">외부식</option>-->
+                            <!--                    <option value="잠액식">잠액식</option>-->
+                            <!--                  </select>-->
+                            <!--                  &lt;!&ndash;                                    <input type="text" name="installName" id="installName" class="form-control" placeholder="설치형태" required="required"/>&ndash;&gt;-->
+                            <!--                </div>-->
+                            <!--              </div>-->
+
+                            <div class="button_box justify-content-center mt20">
+                                <button type="submit" class="btn btn-normal" onclick="f_sel"><i class="bi bi-search"></i>조회</button>
+                                <button type="reset" class="btn btn-normal">초기화</button>
+                            </div><!--button_box-->
+                        </div>
+                    </div>
+                    <!--//card-body-->
+
+                </form>
+            </div>
+
+            <!--// 기본정보 조회_section_01-->
+
+
+            <!-- 데이터 테이블 -->
+            <div class="col-lg-12" id="survey_section"  style="display: none">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="title left_title">수명평가항목별 가중치 설문결과 등록</h3>
+                        <!--등급테이블-->
+                        <div id="survey_data_table">
+                            <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                <div class="dataTable-top">
+
+                                    <!--페이지 검색
+                                    <div class="dataTable-dropdown"><label><select class="dataTable-selector">
+                                          <option value="5">5</option>
+                                          <option value="10" selected="">10</option>
+                                          <option value="15">15</option>
+                                          <option value="20">20</option>
+                                          <option value="25">25</option>
+                                        </select> entries per page</label>
+                                    </div>-->
+
+                                    <div class="button_wrap">
+                                        <button onclick="confirm()" type="button" class="btn btn-normal"><i
+                                                ></i>확인
+                                        </button>
+                                        <button onclick="registerDB()" type="button" class="btn btn-normal"><i
+                                                class="bi bi-server"></i>DB 반영
+                                        </button>
+                                        <button class="btn btn-normal">수정</button>
+                                        <button onclick="reset()" class="btn btn-normal"><i
+                                                class="bi bi-arrow-clockwise"></i>초기화
+                                        </button>
+                                    </div><!--//button_wrap-->
+                                </div>
+                            </div>
+                            <!--테이블-->
+                            <div class="dataTable-container">
+                                <form>
+                                    <!--class="table datatable dataTable-table"       class="table datatable table-striped"-->
+                                    <table class="table datatable table-striped" id="">
+                                        <thead>
+                                        <tr class="width">
+                                          <th colspan="2" rowspan="5">항목</th>
+                                          <th rowspan="5">질문</th>
+                                          <th>설치형태</th>
+                                            <!--                      <th colspan="17" style="width:30%">공통</th>-->
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>잠액식</th>
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>잠액식</th>
+                                            <th>공통</th>
+<!--                                            <th>공통</th>-->
+                                            <th>공통</th>
+                                            <th>공통</th>
+                                            <th>공통</th>
+<!--                                            <th>공통</th>-->
+<!--                                            <th>공통</th>-->
+                                            <th style="width:3%">#</th>
+                                        </tr>
+                                        <tr>
+                                            <th>구성</th>
+                                            <th>PUMP</th>
+                                            <th>PUMP</th>
+                                            <th>PUMP</th>
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+                                            <th>SHAFT</th>
+                                            <th>MOTOR</th>
+<!--                                            <th>ROTOR</th>-->
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+                                            <th>MOTOR</th>
+<!--                                            <th>MOTOR</th>-->
+<!--                                            <th>MOTOR</th>-->
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th>측량유</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>Monitor</th>
+                                            <th>On/Off</th>
+                                            <th>On/Off</th>
+<!--                                            <th>On/Off</th>-->
+                                            <th>On/Off</th>
+                                            <th>On/Off</th>
+                                            <th>On/Off</th>
+<!--                                            <th>On/Off</th>-->
+<!--                                            <th>On/Off</th>-->
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th>항목</th>
+                                            <th>성능(유량)</th>
+                                            <th>성능(압력)</th>
+                                            <th>펌프 효율</th>
+                                            <th>모터 효율</th>
+                                            <th>진동</th>
+                                            <th>전압</th>
+                                            <th>전압 불평등</th>
+                                            <th>전류 불평등</th>
+                                            <th>과전류</th>
+                                            <th>Run-Out-Motor Rotor</th>
+<!--                                            <th>Run-out Upper Shaft</th>-->
+<!--                                            <th>Run-out Lower Shaft</th>-->
+<!--                                            <th>Run-out Motor Shaft</th>-->
+                                            <th>절연저항시험</th>
+<!--                                            <th>서지검사</th>-->
+                                            <th>육안검사(부식/ 긁힘)</th>
+                                            <th>마모/ 치수</th>
+                                            <th>비파괴 시험</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th>단위</th>
+                                            <th>[t/h]</th>
+                                            <th>[㎫]</th>
+                                            <th>[%]</th>
+                                            <th>[%]</th>
+                                            <th>[mm/s]</th>
+                                            <th>[V]</th>
+                                            <th>[%]</th>
+                                            <th>[%]</th>
+                                            <th>[%]</th>
+                                            <th>mm/m</th>
+<!--                                            <th>[mm]</th>-->
+<!--                                            <th>[mm]</th>-->
+<!--                                            <th>[mm]</th>-->
+                                            <th>[M Ohm]</th>
+<!--                                            <th>[V]</th>-->
+                                            <th>-</th>
+                                            <th>[mm]</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td rowspan="5" class="head_01 border">자산데이터</td>
+                                            <td rowspan="2" class="value_01">중요도</td>
+                                            <td class="text_left" style="border-right: none; width: 400px"> - 수명평가 항목은 관련 자산(설비/부품)이 공정에서 요구하는 기능/성능을 결정하는 인자인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)이 현장작업 또는 대외(환경오염, 안전(누출 등) 등)적인 영향을 줄수 있는 수명평가 항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                          <td rowspan="2" class="value_01">사용조건</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 가동율1)에 영향을 미치는 수명평가 항목인가? [가동률 : (실제운전시간/사용한계시간.) x 100]
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 부하율2)에 영향을 미치는 수명평가 항목인가? [부하율 : (운영Capa./총 수용Capa.) X 100]
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="line">
+                                            <td class="value_01">운전조건</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 운영조건(온도/압력, 전압/전류 등)에 영향을 미치는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="4" class="border">고장/정비이력<br>데이터</td>
+                                            <td rowspan="2" class="value_01">누적운전시간</td>
+                                            <td class="text_left" style="border-right: none;"> - 누적운전시간이 관련 자산(설비/부품)의 기능/성능 변화에 영향을 주는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 정기적인 분해정비/점검 후 고장/이상을 감지하는데 유용한 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="value_01">열화속도</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 열화속도(고장/성능저하에 이르게 하는 기간)와 연관이 있는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="line">
+                                            <td class="value_01">신뢰성</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 신뢰성(성능/상태)을 판단할 수 있는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="6" class="border">측정데이터</td>
+                                            <td rowspan="2" class="value_01">고장/성능 관려</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)에 요구성능 달성정도를 판단할 수 있는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 성능 변화를 판단할 수 있는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" class="value_01">Risk(CoF</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 고장으로 인한 Risk(생산/환경/안전Risk)수준을 판단할 수 있는 수명평가 항목인가?
+                                                가능성을 판단할 수 있는 수명평가 항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 고장으로 인한 Risk(생산/환경/안전Risk)수준을 판단할 수 있는 수명평가 항목인가?
+                                                가능성을 판단할 수 있는 수명평가 항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="value_01">품질</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 정기점검과 계측을 통해 정량적으로 수집되는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="line">
+                                            <td class="value_01">측정주기</td>
+                                            <td class="text_left" style="border-right: none;"> - 자산(설비/부품)의 점검 데이터 측정 주기가 정립되어 있는 수명평가 항목인가?
+                                                항목인가?
+                                            </td>
+                                            <td style="border-left: none;"></td>
+                                            <td><input type="checkbox" name="n1"></td>
+                                            <td><input type="checkbox" name="n2"></td>
+                                            <td><input type="checkbox" name="n3"></td>
+                                            <td><input type="checkbox" name="n4"></td>
+                                            <td><input type="checkbox" name="n5"></td>
+                                            <td><input type="checkbox" name="n6"></td>
+                                            <td><input type="checkbox" name="n7"></td>
+                                            <td><input type="checkbox" name="n8"></td>
+                                            <td><input type="checkbox" name="n9"></td>
+                                            <td><input type="checkbox" name="n10"></td>
+<!--                                            <td><input type="checkbox" name="n11"></td>-->
+<!--                                            <td><input type="checkbox" name="n12"></td>-->
+                                            <td><input type="checkbox" name="n11"></td>
+<!--                                            <td><input type="checkbox" name="n14"></td>-->
+                                            <td><input type="checkbox" name="n12"></td>
+                                            <td><input type="checkbox" name="n13"></td>
+                                            <td><input type="checkbox" name="n14"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="row_q2" th:each="surveyQuestion : ${surveyQuestions}" id="point">
+                                            <td class="bold" colspan="3">평가점수</td>
+                                            <td></td>
+                                            <td id="point1" th:text="${surveyQuestion.getP1()}"></td>
+                                            <td id="point2" th:text="${surveyQuestion.getP2()}"></td>
+                                            <td id="point3" th:text="${surveyQuestion.getP3()}"></td>
+                                            <td id="point4" th:text="${surveyQuestion.getP4()}"></td>
+                                            <td id="point5" th:text="${surveyQuestion.getP5()}"></td>
+                                            <td id="point6" th:text="${surveyQuestion.getP6()}"></td>
+                                            <td id="point7" th:text="${surveyQuestion.getP7()}"></td>
+                                            <td id="point8" th:text="${surveyQuestion.getP8()}"></td>
+                                            <td id="point9" th:text="${surveyQuestion.getP9()}"></td>
+                                            <td id="point10" th:text="${surveyQuestion.getP10()}"></td>
+<!--                                            <td id="point11" th:text="${surveyQuestion.getP11()}"></td>-->
+<!--                                            <td id="point12" th:text="${surveyQuestion.getP12()}"></td>-->
+                                            <td id="point11" th:text="${surveyQuestion.getP11()}"></td>
+<!--                                            <td id="point14" th:text="${surveyQuestion.getP14()}"></td>-->
+                                            <td id="point12" th:text="${surveyQuestion.getP12()}"></td>
+                                            <td id="point13" th:text="${surveyQuestion.getP13()}"></td>
+                                            <td id="point14" th:text="${surveyQuestion.getP14()}"></td>
+                                            <td id="point18"></td>
+                                            <td id="weightSeqHiddenR" style="display: none"
+                                                th:text="${surveyQuestion.getWeightSeq()}"></td>
+                                        </tr>
+                                        <tr class="row_q3" th:each="surveyQuestion : ${surveyQuestions}">
+                                            <td class="bold" colspan="3">Weighting Factor</td>
+                                            <td></td>
+                                            <td id="w1" th:text="${surveyQuestion.getW1()}"></td>
+                                            <td id="w2" th:text="${surveyQuestion.getW2()}"></td>
+                                            <td id="w3" th:text="${surveyQuestion.getW3()}"></td>
+                                            <td id="w4" th:text="${surveyQuestion.getW4()}"></td>
+                                            <td id="w5" th:text="${surveyQuestion.getW5()}"></td>
+                                            <td id="w6" th:text="${surveyQuestion.getW6()}"></td>
+                                            <td id="w7" th:text="${surveyQuestion.getW7()}"></td>
+                                            <td id="w8" th:text="${surveyQuestion.getW8()}"></td>
+                                            <td id="w9" th:text="${surveyQuestion.getW9()}"></td>
+                                            <td id="w10" th:text="${surveyQuestion.getW10()}"></td>
+<!--                                            <td id="w11" th:text="${surveyQuestion.getW11()}"></td>-->
+<!--                                            <td id="w12" th:text="${surveyQuestion.getW12()}"></td>-->
+                                            <td id="w11" th:text="${surveyQuestion.getW11()}"></td>
+<!--                                            <td id="w14" th:text="${surveyQuestion.getW14()}"></td>-->
+                                            <td id="w12" th:text="${surveyQuestion.getW12()}"></td>
+                                            <td id="w13" th:text="${surveyQuestion.getW13()}"></td>
+                                            <td id="w14" th:text="${surveyQuestion.getW14()}"></td>
+                                            <td>100%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <!--//data_table_page-->
+                            </div>
+                            <!--//data_table-->
+                        </div>
+                        <!--//card-body-->
+                    </div>
+                </div>
+                <!--//테이블_section_03-->
+            </div>
+        </div>
+    </section>
+    <!--//class="section"-->
+</main><!-- End #main -->
+<div th:replace="fragments/footer :: footer"/>
+</body>
+<script>
+    let obj = new Object();
+
+    let selF = localStorage.getItem("facilityName3Str");
+
+    window.onload = function () {
+
+        let tempId = document.getElementById("facilityName3");
+        if(document.getElementById("point").innerHTML != null){
+            selectedControl(tempId,selF)
+            document.getElementById("survey_section").style.display = 'block';
+        }else {
+            tempId.options[0].selected = true;
+
+
+        }
+
+
+
+    }
+
+    function selChange(target){
+
+        let x = document.getElementById("facilityName3").value;
+        localStorage.setItem("facilityName3Str", x);
+
+    }
+
+    // function f_sel(){
+    //     let facilityNameS = $("#facilityName option:selected").val();
+    //     localStorage.setItem("facilityNameS", facilityNameS.toString());
+    // }
+
+    function selectedControl(tempId, tempWord) {
+        //const el = document.getElementById('fruit');  //select box
+        const len = tempId.options.length; //select box의 option 갯수
+        const str = tempWord; //입력 받은 value 값
+        //select box의 option 갯수만큼 for문 돌림
+        for (let i = 0; i < len; i++) {
+            //select box의 option value가 입력 받은 value의 값과 일치할 경우 selected
+            if (tempId.options[i].value == str) {
+                tempId.options[i].selected = true;
+            }
+        }
+    }
+
+
+
+    function confirm() {
+
+        // let facilityNameId = document.getElementById("facilityName");
+        //
+        // localStorage.setItem("facilityName", facilityName)
+        // localStorage.setItem("facilityNameId", facilityNameId)
+
+        // let facilityNameS = $("#facilityName option:selected").val();
+        // localStorage.setItem("facilityNameS", facilityNameS.toString());
+
+
+        let p1 = document.getElementById("point1").innerText = $("input:checkbox[name=n1]:checked").length;
+        let p2 = document.getElementById("point2").innerText = $("input:checkbox[name=n2]:checked").length;
+        let p3 = document.getElementById("point3").innerText = $("input:checkbox[name=n3]:checked").length;
+        let p4 = document.getElementById("point4").innerText = $("input:checkbox[name=n4]:checked").length;
+        ;
+        let p5 = document.getElementById("point5").innerText = $("input:checkbox[name=n5]:checked").length;
+        let p6 = document.getElementById("point6").innerText = $("input:checkbox[name=n6]:checked").length;
+        let p7 = document.getElementById("point7").innerText = $("input:checkbox[name=n7]:checked").length;
+        let p8 = document.getElementById("point8").innerText = $("input:checkbox[name=n8]:checked").length;
+        let p9 = document.getElementById("point9").innerText = $("input:checkbox[name=n9]:checked").length;
+        let p10 = document.getElementById("point10").innerText = $("input:checkbox[name=n10]:checked").length;
+        // let p11 = document.getElementById("point11").innerText = $("input:checkbox[name=n11]:checked").length;
+        // let p12 = document.getElementById("point12").innerText = $("input:checkbox[name=n12]:checked").length;
+        let p11 = document.getElementById("point11").innerText = $("input:checkbox[name=n11]:checked").length;
+        // let p14 = document.getElementById("point14").innerText = $("input:checkbox[name=n14]:checked").length;
+        let p12 = document.getElementById("point12").innerText = $("input:checkbox[name=n12]:checked").length;
+        let p13 = document.getElementById("point13").innerText = $("input:checkbox[name=n13]:checked").length;
+        let p14 = document.getElementById("point14").innerText = $("input:checkbox[name=n14]:checked").length;
+
+        //let p18 = document.getElementById("point18").innerText = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10 + p11 + p12 + p13 + p14 + p15 + p16 + p17;
+        let p18 = document.getElementById("point18").innerText = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10 + p11 + p12 + p13 + p14;
+
+        let w1 = p1 / p18;
+        w1 = w1.toFixed(2)
+
+        let w2 = p2 / p18;
+        w2 = w2.toFixed(2);
+
+        let w3 = p3 / p18;
+        w3 = w3.toFixed(2);
+
+        let w4 = p4 / p18;
+        w4 = w4.toFixed(2);
+
+        let w5 = p5 / p18;
+        w5 = w5.toFixed(2);
+
+        let w6 = p6 / p18;
+        w6 = w6.toFixed(2);
+
+        let w7 = p7 / p18;
+        w7 = w7.toFixed(2);
+
+        let w8 = p8 / p18;
+        w8 = w8.toFixed(2);
+
+        let w9 = p9 / p18;
+        w9 = w9.toFixed(2);
+
+        let w10 = p10 / p18;
+        w10 = w10.toFixed(2);
+
+        // let w11 = p11 / p18;
+        // w11 = w11.toFixed(2);
+        //
+        // let w12 = p12 / p18;
+        // w12 = w12.toFixed(2);
+
+        let w11 = p11 / p18;
+        w11 = w11.toFixed(2);
+
+        // let w14 = p14 / p18;
+        // w14 = w14.toFixed(2);
+
+        let w12 = p12 / p18;
+        w12 = w12.toFixed(2);
+
+        let w13 = p13 / p18;
+        w13 = w13.toFixed(2);
+
+        let w14 = p14 / p18;
+        w14 = w14.toFixed(2);
+
+
+        document.getElementById("w1").innerText = w1.toString();
+        document.getElementById("w2").innerText = w2.toString();
+        document.getElementById("w3").innerText = w3.toString();
+        document.getElementById("w4").innerText = w4.toString();
+        document.getElementById("w5").innerText = w5.toString();
+        document.getElementById("w6").innerText = w6.toString();
+        document.getElementById("w7").innerText = w7.toString();
+        document.getElementById("w8").innerText = w8.toString();
+        document.getElementById("w9").innerText = w9.toString();
+        document.getElementById("w10").innerText = w10.toString();
+        // document.getElementById("w11").innerText = w11.toString();
+        // document.getElementById("w12").innerText = w12.toString();
+        document.getElementById("w11").innerText = w11.toString();
+        // document.getElementById("w14").innerText = w14.toString();
+        document.getElementById("w12").innerText = w12.toString();
+        document.getElementById("w13").innerText = w13.toString();
+        document.getElementById("w14").innerText = w14.toString();;
+
+
+        obj.weightSeq = document.getElementById("weightSeqHiddenR").innerText;
+        obj.facilityName = selF;//$("select[name=facilityName3] option:selected").text();
+        obj.p1 = p1;
+        obj.p2 = p2;
+        obj.p3 = p3;
+        obj.p4 = p4;
+        obj.p5 = p5;
+        obj.p6 = p6;
+        obj.p7 = p7;
+        obj.p8 = p8;
+        obj.p9 = p9;
+        obj.p10 = p10;
+        // obj.p11 = p11;
+        // obj.p12 = p12;
+        obj.p11 = p11;
+        // obj.p14 = p14;
+        obj.p12 = p12;
+        obj.p13 = p13;
+        obj.p14 = p14;
+        obj.p18 = p18;
+
+        obj.w1 = w1;
+        obj.w2 = w2;
+        obj.w3 = w3;
+        obj.w4 = w4;
+        obj.w5 = w5;
+        obj.w6 = w6;
+        obj.w7 = w7;
+        obj.w8 = w8;
+        obj.w9 = w9;
+        obj.w10 = w10;
+        // obj.w11 = w11;
+        // obj.w12 = w12;
+        obj.w11 = w11;
+        // obj.w14 = w14;
+        obj.w12 = w12;
+        obj.w13 = w13;
+        obj.w14 = w14;
+
+        // alert(obj.facilityName)
+        // alert(obj.weightSeq)
+    }
+
+    function registerDB() {
+
+
+        $.ajax({
+            url: "/surveyQuestions",
+            type: "POST",
+            //traditional: true, // ajax 배열 넘기기 옵션
+            dataType: "json",
+            processData: true,
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(obj),
+            //data: {"objRegister" : objRegister},
+            success: function (data) {
+                if (data == 1) {
+                    alert("등록 성공");
+                } else {
+                    alert("등록 실패!");
+                }
+            }
+        });
+        //setTimeout("location.reload()", 300);
+    }
+</script>
+</html>

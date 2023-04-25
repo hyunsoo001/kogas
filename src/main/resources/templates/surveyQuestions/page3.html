@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:visibility="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header">
+
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+<!--main-->
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+
+            <!--기본정보 조회-->
+            <div class="col-lg-12" id="section_04">
+                <form class="m-t" role="form" action="/facilityBaseInfos/findOne" id="findOne" method="get">
+                    <div class="title_warp">
+                        <h3 class="title">설비별 수명평가항목 가중치 설문지</h3>
+                        <div class="tri"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">설비명</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="facilityName"
+                                            id="facilityName" placeholder="설비명" required>
+                                        <option value="" selected>==선택해주세요==</option>
+                                        <option value="HP LNG 펌프">HP LNG 펌프</option>
+                                        <option value="LP LNG펌프">LP LNG펌프</option>
+                                        <option value="BOG 압축기">BOG 압축기</option>
+                                        <option value="해수펌프">해수펌프</option>
+                                        <option value="해수식 기화기">해수식 기화기</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="facilityName" id="facilityName" class="form-control" placeholder="설비명" required="required"/>-->
+                                </div>
+                            </div>
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">설치형태</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="installName"
+                                            id="installName" placeholder="설치형태" required>
+                                        <option value="" selected>==선택해주세요==</option>
+                                        <option value="공통">공통</option>
+                                        <option value="외부식">외부식</option>
+                                        <option value="잠액식">잠액식</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="installName" id="installName" class="form-control" placeholder="설치형태" required="required"/>-->
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="button_box justify-content-center mt20">
+                                <button type="submit" class="btn btn-normal"><i class="bi bi-search"></i>조회</button>
+                                <button type="reset" class="btn btn-normal">초기화</button>
+                            </div>
+                            <!--button_box-->
+                        </div>
+                    </div>
+                    <!--//card-body-->
+
+                </form>
+            </div>
+
+            <!--// 기본정보 조회_section_01-->
+
+
+            <!-- 데이터 테이블 -->
+            <div class="col-lg-12" id="survey_section">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="title left_title">수명평가항목별 가중치 설문결과 등록</h3>
+                        <!--등급테이블-->
+                        <div id="survey_data_table">
+                            <div
+                                    class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                <div class="dataTable-top">
+
+                                    <!--페이지 검색
+                                <div class="dataTable-dropdown"><label><select class="dataTable-selector">
+                                      <option value="5">5</option>
+                                      <option value="10" selected="">10</option>
+                                      <option value="15">15</option>
+                                      <option value="20">20</option>
+                                      <option value="25">25</option>
+                                    </select> entries per page</label>
+                                </div>-->
+
+                                    <div class="button_wrap justify-content-end">
+                                        <button onclick="registerDB()" type="button" class="btn btn-normal"><i
+                                                class="bi bi-server"></i>DB 반영
+                                        </button>
+                                        <button class="btn btn-normal">수정</button>
+                                        <button onclick="reset()" class="btn btn-normal"><i
+                                                class="bi bi-arrow-clockwise"></i>초기화
+                                        </button>
+                                    </div>
+                                    <!--//button_wrap-->
+                                </div>
+                            </div>
+                            <!--테이블-->
+                            <div class="dataTable-container mt20">
+                                <table class="table datatable dataTable-table" id="">
+                                    <thead>
+                                    <tr class="title">
+                                        <th colspan="2" rowspan="5" class="head_01">항목</th>
+                                        <th rowspan="5" class="head_02">질문</th>
+                                        <th class="head_03">설치형태</th>
+                                        <th colspan="11" class="head_04">공통</th>
+                                        <th>#</th>
+                                    </tr>
+                                    <tr class="txt_input">
+                                        <th>구성</th>
+                                        <th>PUMP</th>
+                                        <th>PUMP</th>
+                                        <th>PUMP</th>
+                                        <th>MOTOR</th>
+                                        <th>MOTOR</th>
+                                        <th>MOTOR</th>
+                                        <th>MOTOR</th>
+                                        <th>MOTOR</th>
+                                        <th>MOTOR</th>
+                                        <th>MOTOR</th>
+                                        <th>PUMP</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th>측량유</th>
+                                        <th>Monitor</th>
+                                        <th>Monitor</th>
+                                        <th>Monitor</th>
+                                        <th>Monitor</th>
+                                        <th>Monitor</th>
+                                        <th>On/Off</th>
+                                        <th>Monitor</th>
+                                        <th>Monitor</th>
+                                        <th>점검</th>
+                                        <th>점검</th>
+                                        <th>점검</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th>항목</th>
+                                        <th>성능(유량)</th>
+                                        <th>성능(압력)</th>
+                                        <th>전류</th>
+                                        <th>진동</th>
+                                        <th>Run-out Shaft</th>
+                                        <th>절연저항시험</th>
+                                        <th>권선내압실</th>
+                                        <th>Impeller Balancing</th>
+                                        <th>육안검사(부식/ 긁힘)</th>
+                                        <th>마모/ 치수</th>
+                                        <th>비파괴 시</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th>단위</th>
+                                        <th>[t/h]</th>
+                                        <th>[㎫]</th>
+                                        <th>[A]</th>
+                                        <th>[mm/s]</th>
+                                        <th>[mm]</th>
+                                        <th>[M Ohm]</th>
+                                        <th>-</th>
+                                        <th>[%]</th>
+                                        <th>-</th>
+                                        <th>[mm]</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td rowspan="5" class="head_01 border">자산데이터</td>
+                                        <td rowspan="2" class="value_01">중요도</td>
+                                        <td class="text_left">자산(설비/부품)이 공정 상 요구되는 기능/성능을 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text_left">자산(설비/부품)이 공정 상 요구되는 기능/성능을 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2" class="value_01">사용조건</td>
+                                        <td class="text_left">자산(설비/부품)이 공정 상 요구되는 기능/성능을 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text_left">자산(설비/부품)이 공정 상 요구되는 기능/성능을 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="line">
+                                        <td class="value_01">운전조건</td>
+                                        <td class="text_left">자산(설비/부품)이 공정 상 요구되는 기능/성능을 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="4" class="border">고장/정비이력<br>데이터</td>
+                                        <td rowspan="2" class="value_01">누적운전시간</td>
+                                        <td class="text_left">누적운전시간이 관련 자산(설비/부품)의 기능/성능 변화에 영향을 주는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text_left">누적운전시간이 관련 자산(설비/부품)의 기능/성능 변화에 영향을 주는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="value_01">열화속도</td>
+                                        <td class="text_left">누적운전시간이 관련 자산(설비/부품)의 기능/성능 변화에 영향을 주는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="line">
+                                        <td class="value_01">신뢰성</td>
+                                        <td class="text_left">누적운전시간이 관련 자산(설비/부품)의 기능/성능 변화에 영향을 주는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="6" class="border">측정데이터</td>
+                                        <td rowspan="2" class="value_01">고장/성능 관려</td>
+                                        <td class="text_left">- 자산(설비/부품)에 요구성능 달성정도를 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text_left">- 자산(설비/부품)에 요구성능 달성정도를 판단할 수 있는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2" class="value_01">Risk(CoF</td>
+                                        <td class="text_left">- 자산(설비/부품)의 권장기준 미달시 Risk(생산/환경/안전Risk)발생 가능성을 판단할 수 있는
+                                            수명평가 항목인가?
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text_left">- 자산(설비/부품)의 권장기준 미달시 Risk(생산/환경/안전Risk)발생 가능성을 판단할 수 있는
+                                            수명평가 항목인가?
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="value_01">품질</td>
+                                        <td class="text_left">자산(설비/부품)의 정기점검과 계측을 통해 정량적으로 수집되는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="line">
+                                        <td class="value_01">측정주기</td>
+                                        <td class="text_left">자산(설비/부품)의 정기점검과 계측을 통해 정량적으로 수집되는 수명평가 항목인가?</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="row_q2">
+                                        <td class="bold" colspan="3">평가점수</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td class="bold">0.00</td>
+                                    </tr>
+                                    <tr class="row_q3">
+                                        <td class="bold" colspan="3">Weighting Factor</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td class="bold">100%</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!--//data_table_page-->
+
+
+                        </div>
+                        <!--//data_table-->
+                    </div>
+                    <!--//card-body-->
+                </div>
+            </div>
+            <!--//테이블_section_03-->
+        </div>
+        </div>
+    </section>
+    <!--//class="section"-->
+
+
+</main><!-- End #main -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+
+<script>
+    let delKey = null;
+    let delKeySeq;
+    let str = "";
+
+    let objRegister = new Object();
+    objRegister.c = [];
+    objRegister.d = [];
+    objRegister.u = [];
+
+    function f_click(target) {
+        var tbody = target.parentNode;
+        var trs = tbody.getElementsByTagName('tr');
+
+
+        var backColor = "#ffffff";
+        var textColor = "black";
+        var orgBColor = "gray";
+        var orgTColor = "#ffffff";
+
+
+        for (var i = 0; i < trs.length; i++) {
+            if (trs[i] != target) {
+                trs[i].style.backgroundColor = backColor;
+                trs[i].style.color = textColor;
+            } else {
+                trs[i].style.backgroundColor = orgBColor;
+                trs[i].style.color = orgTColor;
+
+                delKey = i;
+                str = trs[i].innerText;
+
+            }
+        }
+
+        var words = str.split('\t');
+        const tmp1 = document.getElementById("inven");
+        tmp1.setAttribute('placeholder', words.at(0));
+        tmp1.setAttribute('value', words.at(0));
+        selectedControl(tmp1, words.at(0))
+        // const el = document.getElementById("inven");
+        // el.options[delKey].selected = true;
+
+
+        const tmp2 = document.getElementById("locate");
+        tmp2.setAttribute('placeholder', words.at(1));
+        tmp2.setAttribute('value', words.at(1));
+        selectedControl(tmp2, words.at(1))
+
+        const tmp3 = document.getElementById("facility");
+        tmp3.setAttribute('placeholder', words.at(2));
+        tmp3.setAttribute('value', words.at(2));
+        selectedControl(tmp3, words.at(2))
+
+        const tmp4 = document.getElementById("install");
+        tmp4.setAttribute('placeholder', words.at(3));
+        tmp4.setAttribute('value', words.at(3));
+        selectedControl(tmp4, words.at(3))
+
+        const tmp5 = document.getElementById("code");
+        tmp5.setAttribute('placeholder', words.at(4));
+        tmp5.setAttribute('value', words.at(4));
+        selectedControl(tmp5, words.at(4))
+
+
+        const tmp6 = document.getElementById("pro");
+        tmp6.setAttribute('placeholder', words.at(5));
+        tmp6.setAttribute('value', words.at(5));
+
+        const tmp7 = document.getElementById("freq");
+        tmp7.setAttribute('placeholder', words.at(6));
+        tmp7.setAttribute('value', words.at(6));
+
+        const tmp8 = document.getElementById("impell");
+        tmp8.setAttribute('placeholder', words.at(7));
+        tmp8.setAttribute('value', words.at(7));
+
+        const tmp9 = document.getElementById("motor");
+        tmp9.setAttribute('placeholder', words.at(8));
+        tmp9.setAttribute('value', words.at(8));
+
+        const tmp10 = document.getElementById("up");
+        tmp10.setAttribute('placeholder', words.at(9));
+        tmp10.setAttribute('value', words.at(9));
+
+        const tmp11 = document.getElementById("down");
+        tmp11.setAttribute('placeholder', words.at(10));
+        tmp11.setAttribute('value', words.at(10));
+
+        //infoSeq 값 뽑아내기 위한 파싱처리 . 그리드에서 숨겨진 값 이라서 이렇게 처리
+        let delKeyStr = trs[delKey].innerHTML;
+        let parsingDel1 = delKeyStr.slice(delKeyStr.indexOf('none'), delKeyStr.lastIndexOf('td>'))
+        delKeySeq = parsingDel1.slice(parsingDel1.indexOf('>') + 1, parsingDel1.lastIndexOf('<'))
+
+        const tmp12 = document.getElementById("infoSeqHiddenR");
+        tmp12.setAttribute('placeholder', delKeySeq);
+        tmp12.setAttribute('value', delKeySeq);
+    }
+
+    function selectedControl(tempId, tempWord) {
+        //const el = document.getElementById('fruit');  //select box
+        const len = tempId.options.length; //select box의 option 갯수
+        const str = tempWord; //입력 받은 value 값
+        //select box의 option 갯수만큼 for문 돌림
+        for (let i = 0; i < len; i++) {
+            //select box의 option value가 입력 받은 value의 값과 일치할 경우 selected
+            if (tempId.options[i].value == str) {
+                tempId.options[i].selected = true;
+            }
+        }
+    }
+
+
+    function addRow() {
+
+        //table element 찾기
+        const table = document.getElementById("facilityInfo");
+
+        table.style.color = "black"
+        table.style.backgroundColor = "white"
+        // 새 행(Row) 추가
+        const newRow = table.insertRow(1);
+
+        var tbody = document.getElementById("tableRow").parentNode;
+        var trs = tbody.getElementsByTagName('tr');
+
+        var backColor = "#ffffff";
+        var textColor = "black";
+
+        for (var i = 0; i < trs.length; i++) {
+            trs[i].style.backgroundColor = backColor;
+            trs[i].style.color = textColor;
+        }
+
+        newRow.style.cursor = "pointer";
+        newRow.style.color = "white";
+        newRow.style.backgroundColor = "gray";
+
+        newRow.ondblclick = function () {
+            facilityRegisterOpen()
+        }
+        newRow.onclick = function () {
+            f_click(this)
+        };
+
+        const newCell = [];
+
+        for (let i = 0; i < 11; i++)
+            newCell[i] = newRow.insertCell(i);
+
+        for (let i = 0; i < 11; i++)
+            newCell[i].innerText = '입력해주세요';
+    }
+
+
+    function deleteRow() {
+        // table element 찾기
+        const table = document.getElementById('facilityInfo');
+
+        // 행(Row) 삭제
+        if (delKey != null)
+            table.deleteRow(delKey);
+
+        let obj = new Object();
+        obj.infoSeq = delKeySeq;
+        objRegister.d.push(obj);
+
+    }
+
+    function facilityRegisterOpen() {
+        let section_02 = document.getElementById("section_02");
+        section_02.style.display = "block";
+    }
+
+    function facilityRegisterClose() {
+        let section_02 = document.getElementById("section_02");
+        section_02.style.display = "none";
+    }
+
+
+    function register() {
+        if ($("#inven").val() && $("#locate").val() && $("#facility").val() && $("#install").val() && $("#code")
+            .val()) {
+            let obj = new Object();
+
+            obj.infoSeq = $("#infoSeqHiddenR").val();
+            obj.invenName = $("#inven").val();
+            obj.locateName = $("#locate").val();
+            obj.facilityName = $("#facility").val();
+            obj.installName = $("#install").val();
+            obj.facilityCode = $("#code").val();
+            obj.producer = $("#pro").val();
+            obj.frequency = $("#freq").val();
+            obj.impellerCnt = $("#impell").val();
+            obj.motorSlipCnt = $("#motor").val();
+            obj.bearingTimeUp = $("#up").val();
+            obj.bearingTimeDown = $("#down").val();
+
+            objRegister.c.push(obj);
+            facilityRegisterClose();
+        } else {
+            alert("비어있는 값을 선택해주세요");
+        }
+    }
+
+    function registerDB() {
+
+
+        $.ajax({
+            url: "/facilityBaseInfos:bulk-update",
+            type: "POST",
+            //traditional: true, // ajax 배열 넘기기 옵션
+            dataType: "json",
+            processData: true,
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(objRegister),
+            //data: {"objRegister" : objRegister},
+            success: function (data) {
+                if (data == 1) {
+                    alert("등록 성공");
+                } else {
+                    alert("등록 실패!");
+                }
+            }
+        });
+        setTimeout("location.reload()", 300);
+        //reset();
+        //location.reload();
+        // window.location.href = "http://localhost:8080/facilityBaseInfos";
+        // $(location).attr('href', 'http://localhost:8080/facilityBaseInfos');
+    }
+
+    function reset() {
+        window.location.href = "http://localhost:8080/facilityBaseInfos";
+    }
+
+    function newRegister() {
+        document.getElementById("infoSeqHiddenR").setAttribute('value',
+            null); // string 형태는 못 받음. 숫자는 같은 infoSeq 값을바꿈. null로 해결
+        const tmp1 = document.getElementById("inven");
+        tmp1.setAttribute('placeholder', '입력해주세요');
+        tmp1.setAttribute('value', '');
+        selectedControl(tmp1, '')
+        // const el = document.getElementById("inven");
+        // el.options[delKey].selected = true;
+
+
+        const tmp2 = document.getElementById("locate");
+        tmp2.setAttribute('placeholder', '입력해주세요');
+        tmp2.setAttribute('value', '');
+        selectedControl(tmp2, '')
+
+        const tmp3 = document.getElementById("facility");
+        tmp3.setAttribute('placeholder', '입력해주세요');
+        tmp3.setAttribute('value', '');
+        selectedControl(tmp3, '')
+
+        const tmp4 = document.getElementById("install");
+        tmp4.setAttribute('placeholder', '입력해주세요');
+        tmp4.setAttribute('value', '');
+        selectedControl(tmp4, '')
+
+        const tmp5 = document.getElementById("code");
+        tmp5.setAttribute('placeholder', '입력해주세요');
+        tmp5.setAttribute('value', '');
+        selectedControl(tmp5, '')
+
+
+        const tmp6 = document.getElementById("pro");
+        tmp6.setAttribute('placeholder', '입력해주세요');
+        tmp6.setAttribute('value', '');
+
+        const tmp7 = document.getElementById("freq");
+        tmp7.setAttribute('placeholder', '입력해주세요');
+        tmp7.setAttribute('value', '');
+
+        const tmp8 = document.getElementById("impell");
+        tmp8.setAttribute('placeholder', '입력해주세요');
+        tmp8.setAttribute('value', '');
+
+        const tmp9 = document.getElementById("motor");
+        tmp9.setAttribute('placeholder', '입력해주세요');
+        tmp9.setAttribute('value', '');
+
+        const tmp10 = document.getElementById("up");
+        tmp10.setAttribute('placeholder', '입력해주세요');
+        tmp10.setAttribute('value', '');
+
+        const tmp11 = document.getElementById("down");
+        tmp11.setAttribute('placeholder', '입력해주세요');
+        tmp11.setAttribute('value', '');
+
+
+        facilityRegisterOpen();
+    }
+</script>
+
+</html>

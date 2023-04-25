@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Baes_Code</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    <div>
+
+    </div>
+
+    <table class="table table-striped">
+        <th>seq</th>
+        <th>group_cdoe</th>
+        <th>base_code_name</th>
+        <th>comm</th>
+        <th>base_code</th>
+
+        <tr th:each="basecode : ${basecodes}"><!-- 첫번째 줄 시작 -->
+            <td th:text="${basecode.seqBase}"></td>
+            <td th:text="${basecode.groupCode}"></td>
+            <td th:text="${basecode.baseCodeName}"></td>
+            <td th:text="${basecode.commm}"></td>
+            <td th:text="${basecode.baseCode}"></td>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:type="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/header :: header">
+</head>
+
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<!--main-->
+<main id="main" class="main">
+  <section class="section">
+    <div class="row">
+      <!--기본정보 조회-->
+      <div class="col-lg-12" id="section_01">
+        <form class="m-t" role="form" action="/facilityBaseInfos/findOne" id="findOne" method="get">
+          <div class="title_warp"><h3 class="title">설비기준정보 조회</h3>
+            <div class="tri"></div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="row col-md-3 box">
+                <label class="col-form-label label_name">기지명</label>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select" name="invenName"
+                          id="invenName" placeholder="기지명">
+                    <option value="" selected>==전체==</option>
+<!--                    <option value="생산운영처">생산운영처</option>-->
+                    <option value="평택기지">평택기지</option>
+                    <option value="인천기지">인천기지</option>
+                    <option value="통영기지">통영기지</option>
+                    <option value="삼척기지">삼척기지</option>
+                  </select>
+                  <!--                                    <input type="text" name="invenName" id="invenName" class="form-control" placeholder="기지명" required="required"/>-->
+                </div>
+              </div>
+              <div class="row col-md-3 box">
+                <label class="col-form-label label_name">위치</label>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select" name="locateName"
+                          id="locateName" placeholder="위치">
+                    <option value="" selected>==전체==</option>
+                    <option value="1공장">1공장</option>
+                    <option value="2공장">2공장</option>
+                    <option value="3공장">3공장</option>
+                  </select>
+                  <!--                                    <input type="text" name="locateName" id="locateName" class="form-control" placeholder="위치" required="required"/>-->
+                </div>
+              </div>
+              <div class="row col-md-3 box_end">
+                <label class="col-form-label label_name">설비명</label>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select" name="facilityName"
+                          id="facilityName" placeholder="설비명">
+                    <option value="" selected>==전체==</option>
+                    <option value="HP LNG 펌프">HP LNG 펌프</option>
+                    <option value="LP LNG 펌프">LP LNG 펌프</option>
+                    <option value="고압LNG펌프">고압LNG펌프</option>
+                    <option value="저압LNG펌프">저압LNG펌프</option>
+                    <option value="BOG 압축기">BOG 압축기</option>
+                    <option value="해수펌프">해수펌프</option>
+                    <option value="해수식 기화기">해수식 기화기</option>
+                  </select>
+                  <!--                                    <input type="text" name="facilityName" id="facilityName" class="form-control" placeholder="설비명" required="required"/>-->
+                </div>
+              </div>
+              <div class="row col-md-3 box">
+                <label class="col-form-label label_name">설치형태</label>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select" name="installName"
+                          id="installName" placeholder="설치형태">
+                    <option value="" selected>==전체==</option>
+                    <option value="공통">공통</option>
+                    <option value="외부모터식">외부모터식</option>
+                    <option value="잠액식">잠액식</option>
+                  </select>
+                  <!--                                    <input type="text" name="installName" id="installName" class="form-control" placeholder="설치형태" required="required"/>-->
+                </div>
+              </div>
+
+              <div class="row col-md-3 box">
+                <label class="col-form-label label_name">설비코드</label>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select" name="facilityCode"
+                          id="facilityCode" placeholder="설비코드">
+                    <option value="" selected>==전체==</option>
+                    <option value="P-201A">P-201A</option>
+                    <option value="P-201B">P-201B</option>
+                    <option value="P-202A">P-202A</option>
+                    <option value="P-202B">P-202B</option>
+                    <option value="P-203A">P-203A</option>
+                  </select>
+                  <!--                                    <input type="text" name="facilityCode" id="facilityCode" class="form-control" placeholder="설비코드" required="required"/>-->
+                </div>
+              </div>
+
+              <div class="button_box justify-content-center mt20">
+                <button type="submit" class="btn btn-normal"><i class="bi bi-search"></i>조회</button>
+                <button type="reset" class="btn btn-normal">초기화</button>
+                <button type="button" class="btn btn-normal" onclick="newRegister()"><i class="bi bi-plus"></i>신규등록</button>
+                <!--                                <button type="button" class="btn btn-normal" onclick="newRegister()"><i class="bi bi-box-arrow-up"></i>엑셀 업로드</button>-->
+                <button type="button" class="btn btn-normal" data-bs-toggle="modal" data-bs-target="#basicModal"><i class="bi bi-box-arrow-up"></i>엑셀업로드</button>
+
+
+              </div><!--button_box-->
+            </div>
+          </div>
+          <!--//card-body-->
+
+        </form>
+        <div class="modal fade" id="basicModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">신규 엑셀업로드</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form th:action="@{/excel/read}" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                  <input class="form-control" type="file" th:name="file1">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button th:type="submit" class="btn btn-primary">업로드</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div><!--//엑셀업로드-->
+      </div>
+      <!--// 기본정보 조회_section_01-->
+      <!-- hidden 처리/ 등록부분-->
+      <div class="col-lg-12" id="section_02" style="display: none">
+        <form class="m-t" role="form" id="bulkUpdateC" method="post">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="title left_title">설비정보 신규 등록</h3>
+              <div class="button_wrap">
+                <button type="button" class="btn btn-normal" onclick="register()"><i
+                        class="bi bi-pencil-fill"></i>등록
+                </button>
+                <button type="reset" class="btn btn-normal">초기화</button>
+                <button type="button" class="btn btn-normal" onclick="facilityRegisterClose()">닫기
+                </button>
+              </div>
+
+              <div class="form_box">
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">기지명</label>
+                  <!--                                <div class="col-12"> <input type="text" class="form-control" placeholder="입력해주세요" id="inven" th:name="invenName" th:value="invenName"></div>-->
+                  <div class="col-12">
+                    <select class="form-select" aria-label="Default select" id="inven"
+                            th:name="invenName" th:value="invenName" placeholder="기지명" required>
+                      <option value="">==선택해주세요==</option>
+                      <option value="생산운영처">생산운영처</option>
+                      <option value="평택기지본부">평택기지본부</option>
+                      <option value="인천기지본부">인천기지본부</option>
+                      <option value="통영기지본부">통영기지본부</option>
+                      <option value="삼척기지본부">삼척기지본부</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">위치</label>
+                  <!--                                 <input type="text" class="form-control" placeholder="입력해주세요" id="locate" th:name="locateName" th:value="locateName"></div>-->
+                  <div class="col-12">
+                    <select class="form-select" aria-label="Default select" id="locate"
+                            th:name="locateName" th:value="locateName" placeholder="위치" required>
+                      <option value="">==선택해주세요==</option>
+                      <option value="1공장">1공장</option>
+                      <option value="2공장">2공장</option>
+                      <option value="3공장">3공장</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">설비명</label>
+                  <!--                                 <input type="text" class="form-control" placeholder="입력해주세요" id="facility" th:name="facilityName" th:value="facilityName"></div>-->
+                  <div class="col-12">
+                    <select class="form-select" aria-label="Default select" id="facility"
+                            th:name="facilityName" th:value="facilityName" placeholder="입력해주세요"
+                            required>
+                      <option value="">==선택해주세요==</option>
+                      <option value="HP LNG 펌프">HP LNG 펌프</option>
+                      <option value="LP LNG 펌프">LP LNG 펌프</option>
+                      <option value="고압LNG펌프">고압LNG펌프</option>
+                      <option value="저압LNG펌프">저압LNG펌프</option>
+                      <option value="BOG 압축기">BOG 압축기</option>
+                      <option value="해수펌프">해수펌프</option>
+                      <option value="해수식 기화기">해수식 기화기</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">설비형태</label>
+                  <!--                                <div class="col-12"> <input type="text" class="form-control" placeholder="입력해주세요" id="install" th:name="installName" th:value="installName"></div>-->
+                  <div class="col-12">
+                    <select class="form-select" aria-label="Default select" id="install"
+                            th:name="installName" th:value="installName" placeholder="설치형태"
+                            required>
+                      <option value="">==선택해주세요==</option>
+                      <option value="공통">공통</option>
+                      <option value="외부모터식">외부모터식</option>
+                      <option value="잠액식">잠액식</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">설비코드</label>
+                  <!--                                <div class="col-12"> <input type="text" class="form-control" placeholder="입력해주세요" id="code" th:name="facilityCode" th:value="facilityCode"></div>-->
+                  <div class="col-12">
+                    <select class="form-select" aria-label="Default select" id="code"
+                            th:name="facilityCode" th:value="facilityCode" placeholder="설비코드"
+                            required>
+                      <option value="">==선택해주세요==</option>
+                      <option value="p-201A">p-201A</option>
+                      <option value="p-201B">p-201B</option>
+                      <option value="p-202A">p-202A</option>
+                      <option value="p-202B">p-202B</option>
+                      <option value="p-203A">p-203A</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">제작사</label>
+                  <div class="col-12"><input type="text" class="form-control" placeholder="입력해주세요"
+                                             id="pro" th:name="producer" th:value="producer"></div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">운전 주파수</label>
+                  <div class="col-12"><input type="number" class="form-control" placeholder="입력해주세요"
+                                             id="freq" th:name="frequency" th:value="frequency"></div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">베인수</label>
+                  <div class="col-12"><input type="number" class="form-control" placeholder="입력해주세요"
+                                             id="impell" th:name="impellerCnt" th:value="impellerCnt">
+                  </div>
+                </div>
+
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">로터수</label>
+                  <div class="col-12"><input type="number" class="form-control" placeholder="입력해주세요"
+                                             id="motor" th:name="motorSlipCnt"
+                                             th:value="motorSlipCnt"></div>
+                </div>
+
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">베어링타입(상)</label>
+                  <div class="col-12"><input type="number" class="form-control" placeholder="입력해주세요"
+                                             id="up" th:name="bearingTimeUp" th:value="bearingTimeUp">
+                  </div>
+                </div>
+                <div class="row col-md-3 box">
+                  <label class="col-form-label label_name">베어링타입(하)</label>
+                  <div class="col-12"><input type="number" class="form-control" placeholder="입력해주세요"
+                                             id="down" th:name="bearingTimeDown"
+                                             th:value="bearingTimeDown"></div>
+                </div>
+
+                <div class="row col-md-3 box" style="display: none">
+                  <label class="col-form-label label_name">infoSeq</label>
+                  <div class="col-12"><input type="text" class="form-control" placeholder="infoSeq"
+                                             id="infoSeqHiddenR" th:name="infoSeq" th:value="infoSeq">
+                  </div>
+                </div>
+              </div><!--//form_box-->
+            </div>
+            <!--//card-body-->
+          </div>
+        </form>
+      </div>
+      <!--// 등록부분_seciton_02-->
+
+
+      <!-- 데이터 테이블 -->
+      <div class="col-lg-12" id="section_03">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="title left_title">수명평가 항목 등급내역</h3>
+            <!--등급테이블-->
+            <div id="data_table">
+              <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                <div class="dataTable-top">
+
+                  <div class="button_wrap">
+                    <button type="button" class="btn btn-normal"
+                            onClick="location.href='/facilityEvaluationGrades'"><i
+                            class="bx bx-star"></i>평가하기
+                    </button>
+                    <!--                                        <button  onclick="addRow()" type="button" class="btn btn-normal">추가</button>-->
+                    <button onclick="deleteRow()" type="button" class="btn btn-normal"><i
+                            class="bi bi-trash-fill"></i>삭제
+                    </button>
+                    <button onclick="reset()" class="btn btn-normal"><i
+                            class="bi bi-arrow-clockwise"></i>초기화
+                    </button>
+                    <button onclick="registerDB()" type="button" class="btn btn-normal"><i
+                            class="bi bi-server"></i>DB 반영
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+              <!--테이블-->
+              <div class="dataTable-container">
+                <table class="table datatable dataTable-table" id="facilityInfo">
+                  <thaed>
+                    <tr class="colum">
+                      <!--<th scope="col" ><a href="#" class="dataTable-sorter num">NO</a></th>-->
+                      <th scope="col">기지명</a></th>
+                      <th scope="col">위치</a></th>
+                      <th scope="col">설비명</a></th>
+                      <th scope="col">설치형태</a></th>
+                      <th scope="col">설비코드</a></th>
+                      <th scope="col">제작사</a></th>
+                      <th scope="col">운전 주파수</a></th>
+                      <th scope="col">베인수</a></th>
+                      <th scope="col">로터수</a></th>
+                      <th scope="col">베어링 타입 (상)</a></th>
+                      <th scope="col">베어링 타입 (하)</a></th>
+                    </tr>
+                  </thaed>
+                  <tbody>
+                  <tr id="tableRow" name="tableRow" onclick="f_click(this)"
+                      ondblclick="facilityRegisterOpen()" style="cursor:pointer;"
+                      th:each="facilityBaseInfo : ${facilityBaseInfos}"><!-- 첫번째 줄 시작 -->
+                    <td th:text="${facilityBaseInfo.getInvenName()}"></td>
+                    <td th:text="${facilityBaseInfo.getLocateName()}"></td>
+                    <td th:text="${facilityBaseInfo.getFacilityName()}"></td>
+                    <td th:text="${facilityBaseInfo.getInstallName()}"></td>
+                    <td th:text="${facilityBaseInfo.getFacilityCode()}"></td>
+                    <td th:text="${facilityBaseInfo.getProducer()}"></td>
+                    <td th:text="${facilityBaseInfo.getFrequency()}"></td>
+                    <td th:text="${facilityBaseInfo.getImpellerCnt()}"></td>
+                    <td th:text="${facilityBaseInfo.getMotorSlipCnt()}"></td>
+                    <td th:text="${facilityBaseInfo.getBearingTimeUp()}"></td>
+                    <td th:text="${facilityBaseInfo.getBearingTimeDown()}"></td>
+
+                    <td id="infoSeq" name="infoSeq" style="display: none"
+                        th:text="${facilityBaseInfo.getInfoSeq()}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!--                            <nav id="data_table_page">-->
+              <!--                                <nav aria-label="Page navigation">-->
+              <!--                                    <ul class="pagination justify-content-center mt50">-->
+              <!--                                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span-->
+              <!--                                                aria-hidden="true">«</span> </a></li>-->
+              <!--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+              <!--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+              <!--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+              <!--                                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span-->
+              <!--                                                aria-hidden="true">»</span> </a></li>-->
+              <!--                                    </ul>-->
+              <!--                                </nav>-->
+              <!--                            </nav>-->
+
+              <nav id="data_table_page">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination justify-content-center mt50">
+                    <li class="page-item">
+                      <a class="page-link" th:href="'/facilityBaseInfos/findOne?page=0'
+                      + '&invenName='+ ${temp.get(0).toString()} + '&locateName='+ ${temp.get(1).toString()} + '&facilityName='+ ${temp.get(2).toString()}
+                      + '&installName='+ ${temp.get(3).toString()} + '&facilityCode='+ ${temp.get(4).toString()}" aria-label="First">
+                        <span aria-hidden="true">First</span>
+                      </a>
+                    </li>
+
+                    <li class="page-item">
+                      <a class="page-link"
+                        th:href = "'/facilityBaseInfos/findOne?page=' + ${nowPage - 2}+ '&invenName='+ ${temp.get(0)} + '&locateName='+ ${temp.get(1)} + '&facilityName='+ ${temp.get(2)}+ '&installName='+ ${temp.get(3)} + '&facilityCode='+ ${temp.get(4)}" aria-label="Previous"> <span
+                              aria-hidden="true">«</span> </a>
+                    </li>
+
+                    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                      <li class="page-item"><a class="page-link" th:if="${page != nowPage}" th:href="'/facilityBaseInfos/findOne?page='+ ${page - 1}
+                      + '&invenName='+ ${temp.get(0)} + '&locateName='+ ${temp.get(1)} + '&facilityName='+ ${temp.get(2)}
+                      + '&installName='+ ${temp.get(3)} + '&facilityCode='+ ${temp.get(4)}" th:text="${page}"></a>
+                        <strong class="page-link" th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
+                    </th:block>
+
+                    <li class="page-item">
+                      <!--                                        <a class="page-link" th:href="${endPage - 1} ? '#' : @{/facilityBaseInfos(page=${nowPage + 1})}" aria-label="Next">-->
+                      <a class="page-link" th:href=" '/facilityBaseInfos/findOne?page=' + ${nowPage}
+                      + '&invenName='+ ${temp.get(0)} + '&locateName='+ ${temp.get(1)} + '&facilityName='+ ${temp.get(2)}
+                      + '&installName='+ ${temp.get(3)} + '&facilityCode='+ ${temp.get(4)}" aria-label="Next">
+                        <span aria-hidden="true">»</span> </a>
+                    </li>
+
+                    <li class="page-item">
+                      <a class="page-link" th:href="'/facilityBaseInfos/findOne?page=' + ${endPage - 1}
+                      + '&invenName='+ ${temp.get(0)} + '&locateName='+ ${temp.get(1)} + '&facilityName='+ ${temp.get(2)}
+                      + '&installName='+ ${temp.get(3)} + '&facilityCode='+ ${temp.get(4)}" aria-label="Last">
+                        <span aria-hidden="true">Last</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </nav>
+
+            </div>
+            <!--//data_table-->
+          </div>
+          <!--//card-body-->
+        </div>
+      </div>
+
+      <!--//테이블_section_03-->
+    </div>
+  </section>
+  <!--//class="section"-->
+</main><!-- End #main -->
+<div th:replace="fragments/footer :: footer"/>
+</body>
+<script>
+
+  let delKey = null;
+  let delKeySeq;
+  let str = "";
+
+  let objRegister = new Object();
+  objRegister.c = [];
+  objRegister.d = [];
+  objRegister.u = [];
+
+  function f_click(target) {
+    let tbody = target.parentNode;
+    let trs = tbody.getElementsByTagName('tr');
+
+
+    let backColor = "#ffffff";
+    let textColor = "black";
+    let orgBColor = "gray";
+    let orgTColor = "#ffffff";
+
+
+    for (let i = 0; i < trs.length; i++) {
+      if (trs[i] != target) {
+        trs[i].style.backgroundColor = backColor;
+        trs[i].style.color = textColor;
+      } else {
+        trs[i].style.backgroundColor = orgBColor;
+        trs[i].style.color = orgTColor;
+
+        delKey = i;
+        str = trs[i].innerText;
+
+      }
+    }
+
+    let words = str.split('\t');
+    const tmp1 = document.getElementById("inven");
+    tmp1.setAttribute('placeholder', words.at(0));
+    tmp1.setAttribute('value', words.at(0));
+    selectedControl(tmp1, words.at(0))
+    // const el = document.getElementById("inven");
+    // el.options[delKey].selected = true;
+
+
+    const tmp2 = document.getElementById("locate");
+    tmp2.setAttribute('placeholder', words.at(1));
+    tmp2.setAttribute('value', words.at(1));
+    selectedControl(tmp2, words.at(1))
+
+    const tmp3 = document.getElementById("facility");
+    tmp3.setAttribute('placeholder', words.at(2));
+    tmp3.setAttribute('value', words.at(2));
+    selectedControl(tmp3, words.at(2))
+
+    const tmp4 = document.getElementById("install");
+    tmp4.setAttribute('placeholder', words.at(3));
+    tmp4.setAttribute('value', words.at(3));
+    selectedControl(tmp4, words.at(3))
+
+    const tmp5 = document.getElementById("code");
+    tmp5.setAttribute('placeholder', words.at(4));
+    tmp5.setAttribute('value', words.at(4));
+    selectedControl(tmp5, words.at(4))
+
+
+    const tmp6 = document.getElementById("pro");
+    tmp6.setAttribute('placeholder', words.at(5));
+    tmp6.setAttribute('value', words.at(5));
+
+    const tmp7 = document.getElementById("freq");
+    tmp7.setAttribute('placeholder', words.at(6));
+    tmp7.setAttribute('value', words.at(6));
+
+    const tmp8 = document.getElementById("impell");
+    tmp8.setAttribute('placeholder', words.at(7));
+    tmp8.setAttribute('value', words.at(7));
+
+    const tmp9 = document.getElementById("motor");
+    tmp9.setAttribute('placeholder', words.at(8));
+    tmp9.setAttribute('value', words.at(8));
+
+    const tmp10 = document.getElementById("up");
+    tmp10.setAttribute('placeholder', words.at(9));
+    tmp10.setAttribute('value', words.at(9));
+
+    const tmp11 = document.getElementById("down");
+    tmp11.setAttribute('placeholder', words.at(10));
+    tmp11.setAttribute('value', words.at(10));
+
+    //infoSeq 값 뽑아내기 위한 파싱처리 . 그리드에서 숨겨진 값 이라서 이렇게 처리
+    let delKeyStr = trs[delKey].innerHTML;
+    let parsingDel1 = delKeyStr.slice(delKeyStr.indexOf('none'), delKeyStr.lastIndexOf('td>'))
+    delKeySeq = parsingDel1.slice(parsingDel1.indexOf('>') + 1, parsingDel1.lastIndexOf('<'))
+
+    const tmp12 = document.getElementById("infoSeqHiddenR");
+    tmp12.setAttribute('placeholder', delKeySeq);
+    tmp12.setAttribute('value', delKeySeq);
+
+    //alert(delKeySeq)
+
+    //데이터 넘겨주기
+    // let cast = {
+    //     "invenName " : words.at(0),
+    //     "locateName " : words.at(1),
+    //     "facilityName " : words.at(2),
+    //     "installName " : words.at(3)
+    // };
+    localStorage.setItem("invenName", words.at(0));
+    localStorage.setItem("locateName", words.at(1));
+    localStorage.setItem("facilityName", words.at(2));
+    localStorage.setItem("installName", words.at(3));
+    localStorage.setItem("evaluationName", null);
+    localStorage.setItem("infoSeq", delKeySeq);
+
+    localStorage.setItem("count", "1");
+
+
+    // localStorage.setItem("cast", JSON.stringify(cast));
+  }
+
+
+  function selectedControl(tempId, tempWord) {
+    //const el = document.getElementById('fruit');  //select box
+    const len = tempId.options.length; //select box의 option 갯수
+    const str = tempWord; //입력 받은 value 값
+    //select box의 option 갯수만큼 for문 돌림
+    for (let i = 0; i < len; i++) {
+      //select box의 option value가 입력 받은 value의 값과 일치할 경우 selected
+      if (tempId.options[i].value == str) {
+        tempId.options[i].selected = true;
+      }
+    }
+  }
+
+
+  function addRow() {
+
+    //table element 찾기
+    const table = document.getElementById("facilityInfo");
+
+    table.style.color = "black"
+    table.style.backgroundColor = "white"
+    // 새 행(Row) 추가
+    const newRow = table.insertRow(1);
+
+    let tbody = document.getElementById("tableRow").parentNode;
+    let trs = tbody.getElementsByTagName('tr');
+
+    let backColor = "#ffffff";
+    let textColor = "black";
+
+    for (let i = 0; i < trs.length; i++) {
+      trs[i].style.backgroundColor = backColor;
+      trs[i].style.color = textColor;
+    }
+
+    newRow.style.cursor = "pointer";
+    newRow.style.color = "white";
+    newRow.style.backgroundColor = "gray";
+
+    newRow.ondblclick = function () {
+      facilityRegisterOpen()
+    }
+    newRow.onclick = function () {
+      f_click(this)
+    };
+
+    const newCell = [];
+
+    for (let i = 0; i < 11; i++)
+      newCell[i] = newRow.insertCell(i);
+
+    for (let i = 0; i < 11; i++)
+      newCell[i].innerText = '입력해주세요';
+  }
+
+
+  function deleteRow() {
+    // table element 찾기
+    const table = document.getElementById('facilityInfo');
+
+    // 행(Row) 삭제
+    if (delKey != null)
+      table.deleteRow(delKey+1);
+
+    let obj = new Object();
+    obj.infoSeq = delKeySeq;
+    objRegister.d.push(obj);
+
+  }
+
+  function facilityRegisterOpen() {
+    let section_02 = document.getElementById("section_02");
+    section_02.style.display = "block";
+  }
+
+  function facilityRegisterClose() {
+    let section_02 = document.getElementById("section_02");
+    section_02.style.display = "none";
+  }
+
+
+  function register() {
+    if ($("#inven").val() && $("#locate").val() && $("#facility").val() && $("#install").val() && $("#code").val()) {
+      let obj = new Object();
+
+      obj.infoSeq = $("#infoSeqHiddenR").val();
+      obj.invenName = $("#inven").val();
+      obj.locateName = $("#locate").val();
+      obj.facilityName = $("#facility").val();
+      obj.installName = $("#install").val();
+      obj.facilityCode = $("#code").val();
+      obj.producer = $("#pro").val();
+      obj.frequency = $("#freq").val();
+      obj.impellerCnt = $("#impell").val();
+      obj.motorSlipCnt = $("#motor").val();
+      obj.bearingTimeUp = $("#up").val();
+      obj.bearingTimeDown = $("#down").val();
+
+      objRegister.c.push(obj);
+      facilityRegisterClose();
+    } else {
+      alert("비어있는 값을 선택해주세요");
+    }
+  }
+
+  function registerDB() {
+
+
+    $.ajax({
+      url: "/facilityBaseInfos:bulk-update",
+      type: "POST",
+      //traditional: true, // ajax 배열 넘기기 옵션
+      dataType: "json",
+      processData: true,
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(objRegister),
+      //data: {"objRegister" : objRegister},
+      success: function (data) {
+        if (data == 1) {
+          alert("등록 성공");
+        } else {
+          alert("등록 실패!");
+        }
+      }
+    });
+    setTimeout("location.reload()", 300);
+    //reset();
+    //location.reload();
+    // window.location.href = "http://localhost:8080/facilityBaseInfos";
+    // $(location).attr('href', 'http://localhost:8080/facilityBaseInfos');
+  }
+
+  function reset() {
+    window.location.href = "http://localhost:8090/facilityBaseInfos";
+  }
+
+  function newRegister() {
+    document.getElementById("infoSeqHiddenR").setAttribute('value', null); // string 형태는 못 받음. 숫자는 같은 infoSeq 값을바꿈. null로 해결
+    const tmp1 = document.getElementById("inven");
+    tmp1.setAttribute('placeholder', '입력해주세요');
+    tmp1.setAttribute('value', '');
+    selectedControl(tmp1, '')
+    // const el = document.getElementById("inven");
+    // el.options[delKey].selected = true;
+
+
+    const tmp2 = document.getElementById("locate");
+    tmp2.setAttribute('placeholder', '입력해주세요');
+    tmp2.setAttribute('value', '');
+    selectedControl(tmp2, '')
+
+    const tmp3 = document.getElementById("facility");
+    tmp3.setAttribute('placeholder', '입력해주세요');
+    tmp3.setAttribute('value', '');
+    selectedControl(tmp3, '')
+
+    const tmp4 = document.getElementById("install");
+    tmp4.setAttribute('placeholder', '입력해주세요');
+    tmp4.setAttribute('value', '');
+    selectedControl(tmp4, '')
+
+    const tmp5 = document.getElementById("code");
+    tmp5.setAttribute('placeholder', '입력해주세요');
+    tmp5.setAttribute('value', '');
+    selectedControl(tmp5, '')
+
+
+    const tmp6 = document.getElementById("pro");
+    tmp6.setAttribute('placeholder', '입력해주세요');
+    tmp6.setAttribute('value', '');
+
+    const tmp7 = document.getElementById("freq");
+    tmp7.setAttribute('placeholder', '입력해주세요');
+    tmp7.setAttribute('value', '');
+
+    const tmp8 = document.getElementById("impell");
+    tmp8.setAttribute('placeholder', '입력해주세요');
+    tmp8.setAttribute('value', '');
+
+    const tmp9 = document.getElementById("motor");
+    tmp9.setAttribute('placeholder', '입력해주세요');
+    tmp9.setAttribute('value', '');
+
+    const tmp10 = document.getElementById("up");
+    tmp10.setAttribute('placeholder', '입력해주세요');
+    tmp10.setAttribute('value', '');
+
+    const tmp11 = document.getElementById("down");
+    tmp11.setAttribute('placeholder', '입력해주세요');
+    tmp11.setAttribute('value', '');
+
+
+    facilityRegisterOpen();
+  }
+
+</script>
+</html>

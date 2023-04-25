@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<!--main-->
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+
+            <!--기본정보 조회-->
+            <div class="col-lg-12" id="section_01">
+                <form class="m-t" role="form" action="/facilityEvaluationGrades/findOne" id="findOne" name="findOne"
+                      method="get">
+                    <div class="title_warp"><h3 class="title">설비평가 기준정보 조회</h3>
+                        <div class="tri"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">기지명</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="invenName"
+                                            id="invenName" placeholder="기지명">
+                                        <option value="" selected>==전체==</option>
+<!--                                        <option value="생산운영처">생산운영처</option>-->
+                                        <option value="평택기지">평택기지</option>
+                                        <option value="인천기지">인천기지</option>
+                                        <option value="통영기지">통영기지</option>
+                                        <option value="삼척기지">삼척기지</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="invenName" id="invenName" class="form-control" placeholder="기지명" required="required"/>-->
+                                </div>
+                            </div>
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">위치</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="locateName"
+                                            id="locateName" placeholder="위치">
+                                        <option value="" selected>==전체==</option>
+                                        <option value="1공장">1공장</option>
+                                        <option value="2공장">2공장</option>
+                                        <option value="3공장">3공장</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="locateName" id="locateName" class="form-control" placeholder="위치" required="required"/>-->
+                                </div>
+                            </div>
+                            <div class="row col-md-3 box_end">
+                                <label class="col-form-label label_name">설비명</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="facilityName"
+                                            id="facilityName" placeholder="설비명">
+                                        <option value="" selected>==전체==</option>
+                                        <option value="HP LNG 펌프">HP LNG 펌프</option>
+                                        <option value="LP LNG 펌프">LP LNG 펌프</option>
+                                        <option value="고압LNG펌프">고압LNG펌프</option>
+                                        <option value="저압LNG펌프">저압LNG펌프</option>
+                                        <option value="BOG 압축기">BOG 압축기</option>
+                                        <option value="해수펌프">해수펌프</option>
+                                        <option value="해수식 기화기">해수식 기화기</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="facilityName" id="facilityName" class="form-control" placeholder="설비명" required="required"/>-->
+                                </div>
+                            </div>
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">설치형태</label>
+                                <div class="col-12">
+                                    <select class="form-select" aria-label="Default select" name="installName"
+                                            id="installName" placeholder="설치형태">
+                                        <option value="" selected>==전체==</option>
+                                        <option value="공통">공통</option>
+                                        <option value="외부모터식">외부모터식</option>
+                                        <option value="잠액식">잠액식</option>
+                                    </select>
+                                    <!--                                    <input type="text" name="installName" id="installName" class="form-control" placeholder="설치형태" required="required"/>-->
+                                </div>
+                            </div>
+
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">수명평가항목</label>
+                                <div class="col-12">
+                                    <select onchange="selectToInput()" class="form-select" aria-label="Default select"
+                                            name="evaluationItemName" id="evaluationItemName" placeholder="설치형태">
+                                        <option value="" selected>==전체==</option>
+                                        <option value="유량">유량</option>
+                                        <option value="압력">압력</option>
+                                        <option value="펌프효율">펌프효율</option>
+                                        <option value="모터효율">모터효율</option>
+                                        <option value="진동">진동</option>
+                                        <option value="전압">전압</option>
+                                        <option value="전압불평등">전압불평등</option>
+                                        <option value="전류불평등">전류불평등</option>
+                                        <option value="과전류">과전류</option>
+                                        <option value="Run-Out-Motor Rotor">Run-Out-Motor Rotor</option>
+<!--                                        <option value="Run-Out Upper Shaft">Run-Out Upper Shaft</option>-->
+<!--                                        <option value="Run-Out Lower Shaft">Run-Out Lower Shaft</option>-->
+<!--                                        <option value="Run-Out Motor Shaft">Run-Out Motor Shaft</option>-->
+                                        <option value="절연저항">절연저항</option>
+<!--                                        <option value="서지검사">서지검사</option>-->
+                                        <option value="육안검사(부식/긁힘)">육안검사(부식/긁힘)</option>
+                                        <option value="마모/치수">마모/치수</option>
+                                        <option value="비파괴시험">비파괴시험</option>
+                                    </select>
+                                    <!--                  <input type="text" name="evaluationItemName" id="evaluationItemName" class="form-control" placeholder="수명평가항목" required="required"/>-->
+                                </div>
+                            </div>
+                            <div class="row col-md-3 box">
+                                <label class="col-form-label label_name">측정단위</label>
+                                <div class="col-12">
+                                    <input type="text" name="unit" id="unit" class="form-control" disabled>
+                                </div>
+                            </div>
+
+                            <div class="button_box justify-content-center mt20">
+                                <button type="submit" class="btn btn-normal"><i class="bi bi-search"></i>조회</button>
+                                <button type="reset" class="btn btn-normal">초기화</button>
+                                <button type="button" class="btn btn-normal" onclick="newRegister()"><i
+                                        class="bi bi-plus"></i>신규등록
+                                </button>
+                            </div><!--button_box-->
+                        </div>
+                    </div>
+                    <!--//card-body-->
+
+                </form>
+            </div>
+
+            <!--// 기본정보 조회_section_01-->
+
+
+            <!-- hidden 처리/ 등록부분-->
+            <div class="col-lg-12" id="section_02" style="display: none">
+                <form class="m-t" role="form" id="bulkUpdateC" method="post">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="title left_title">수명평가항목 등급정보 등록</h3>
+                            <div class="button_wrap">
+                                <button type="button" class="btn btn-normal" onclick="register()"><i
+                                        class="bi bi-pencil-fill"></i>등록
+                                </button>
+                                <button type="reset" class="btn btn-normal">초기화</button>
+                                <button type="button" class="btn btn-normal" onclick="facilityRegisterClose()">닫기
+                                </button>
+                            </div>
+
+                            <div class="form_box">
+                                <div class="row col-md-2 box">
+                                    <label class="col-form-label level level_01">매우좋음</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" placeholder="입력해주세요" id="gradeExcel">
+                                    </div>
+                                </div><!--//input box-->
+                                <div class="row col-md-2 box">
+                                    <label class="col-form-label level level_01">좋음</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" placeholder="입력해주세요" id="gradeGood">
+                                    </div>
+                                </div><!--//input box-->
+                                <div class="row col-md-2 box">
+                                    <label class="col-form-label level level_02">보통</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" placeholder="입력해주세요" id="gradeGeneral">
+                                    </div>
+                                </div><!--//input box-->
+                                <div class="row col-md-2 box">
+                                    <label class="col-form-label level level_03">나쁨</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" placeholder="입력해주세요" id="gradeBad">
+                                    </div>
+                                </div><!--//input box-->
+                                <div class="row col-md-2 box">
+                                    <label class="col-form-label level level_04">매우나쁨</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" placeholder="입력해주세요" id="gradePoor">
+                                    </div>
+                                    <div class="row col-md-3 box" style="display: none">
+                                        <label class="col-form-label label_name">lifeCycleSeq</label>
+                                        <div class="col-12"><input type="text" class="form-control"
+                                                                   placeholder="lifeCycleSeq" id="lifeCycleSeqHiddenR"
+                                                                   name="lifeCycleSeqHiddenR"></div>
+                                    </div>
+                                </div><!--//input box-->
+                            </div><!--//form_box-->
+                        </div>
+                        <!--//card-body-->
+                    </div>
+                </form>
+            </div>
+            <!--// 등록부분_seciton_02-->
+
+
+            <!-- 데이터 테이블 -->
+            <div class="col-lg-12" id="section_03">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="title left_title">수명평가 항목 등급내역</h3>
+                        <!--등급테이블-->
+                        <div id="data_table">
+                            <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                <div class="dataTable-top">
+
+                                    <!--페이지 검색
+                                    <div class="dataTable-dropdown"><label><select class="dataTable-selector">
+                                          <option value="5">5</option>
+                                          <option value="10" selected="">10</option>
+                                          <option value="15">15</option>
+                                          <option value="20">20</option>
+                                          <option value="25">25</option>
+                                        </select> entries per page</label>
+                                    </div>-->
+
+                                    <div class="button_wrap">
+                                        <button type="button" class="btn btn-normal"><i class="bx bx-star"></i>평가완료
+                                        </button>
+                                        <!--                    <button  onclick="addRow()" type="button" class="btn btn-normal">추가</button>-->
+                                        <button onclick="deleteRow()" type="button" class="btn btn-normal"><i
+                                                class="bi bi-trash-fill"></i>삭제
+                                        </button>
+                                        <button onclick="reset()" class="btn btn-normal"><i
+                                                class="bi bi-arrow-clockwise"></i>초기화
+                                        </button>
+                                        <button onclick="registerDB()" type="button" class="btn btn-normal"><i
+                                                class="bi bi-server"></i>DB 반영
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!--테이블-->
+                            <div class="dataTable-container">
+                                <table class="table datatable dataTable-table" id="facilityInfo">
+                                    <thaed>
+                                        <tr class="colum">
+                                            <!--<th scope="col" ><a href="#" class="dataTable-sorter num">NO</a></th>-->
+                                            <th scope="col">기지명</a></th>
+                                            <th scope="col">위치</a></th>
+                                            <th scope="col">설비명</a></th>
+                                            <th scope="col">설치형태</a></th>
+                                            <!--                      <th scope="col">설비코드</a></th>-->
+                                            <th scope="col">수명평가항목</a></th>
+                                            <th scope="col">단위</a></th>
+                                            <th scope="col">매우나쁨</a></th>
+                                            <th scope="col">나쁨</a></th>
+                                            <th scope="col">보통</a></th>
+                                            <th scope="col">좋음</a></th>
+                                            <th scope="col">매우좋음</a></th>
+                                        </tr>
+                                    </thaed>
+                                    <tbody>
+                                    <tr id="tableRow" name="tableRow" onclick="f_click(this)"
+                                        ondblclick="facilityRegisterOpen()" style="cursor:pointer;"
+                                        th:each="facilityEvaluationGrade : ${facilityEvaluationGrades}">
+                                        <!-- 첫번째 줄 시작 -->
+                                        <td th:text="${facilityEvaluationGrade.getInfoSeq().getInvenName()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getInfoSeq().getLocateName()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getInfoSeq().getFacilityName()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getInfoSeq().getInstallName()}"></td>
+                                        <!--                    <td th:text="${facilityEvaluationGrade.getInfoSeq().getInstallCode()}"></td>-->
+                                        <td th:text="${facilityEvaluationGrade.getEvaluationItemName()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getUnit()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getGradePoor()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getGradeBad()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getGradeGeneral()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getGradeGood()}"></td>
+                                        <td th:text="${facilityEvaluationGrade.getGradeExcel()}"></td>
+                                        <td id="lifeCycleSeq" name="lifeCycleSeq" style="display: none"
+                                            th:text="${facilityEvaluationGrade.getLifeCycleSeq()}"></td>
+
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+<!--                            <nav id="data_table_page">-->
+<!--                                <nav aria-label="Page navigation">-->
+<!--                                    <ul class="pagination justify-content-center mt50">-->
+<!--                                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span-->
+<!--                                                aria-hidden="true">«</span> </a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span-->
+<!--                                                aria-hidden="true">»</span> </a></li>-->
+<!--                                    </ul>-->
+<!--                                </nav>-->
+<!--                            </nav>-->
+                            <nav id="data_table_page">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center mt50">
+                                        <li class="page-item">
+                                            <a class="page-link" th:href="@{/facilityEvaluationGrades(page=0)}" aria-label="First">
+                                                <span aria-hidden="true">First</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" th:href="${startPage == nowPage ? '#' : '/facilityEvaluationGrades?page='+ (nowPage - 2) }" aria-label="Previous"> <span
+                                                    aria-hidden="true">«</span> </a>
+                                        </li>
+
+                                        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                                            <li class="page-item"><a class="page-link" th:if="${page != nowPage}" th:href="@{/facilityEvaluationGrades(page = ${page - 1})}" th:text="${page}"></a>
+                                                <strong class="page-link" th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
+                                        </th:block>
+
+                                        <li class="page-item">
+                                            <!--                                        <a class="page-link" th:href="${endPage - 1} ? '#' : @{/facilityBaseInfos(page=${nowPage + 1})}" aria-label="Next">-->
+                                            <a class="page-link" th:href="${endPage == nowPage ? '#' : '/facilityEvaluationGrades?page=' + (nowPage)}" aria-label="Next">
+                                                <span aria-hidden="true">»</span> </a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" th:href="@{/facilityBaseInfos(page=${endPage - 1})}" aria-label="Last">
+                                                <span aria-hidden="true">Last</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </nav>
+                            <!--//data_table_page-->
+
+
+                        </div>
+                        <!--//data_table-->
+                    </div>
+                    <!--//card-body-->
+                </div>
+            </div>
+            <!--//테이블_section_03-->
+        </div>
+        </div>
+    </section>
+    <!--//class="section"-->
+</main><!-- End #main -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+<script>
+    let delKey = null;
+    let delKeySeq;
+    let str = "";
+    let infoSeqTransfer = localStorage.getItem("infoSeq")
+
+    let objRegister = new Object();
+    objRegister.c = [];
+    objRegister.d = [];
+    objRegister.u = [];
+
+    //시작할때 자동실행 함수
+    window.onload = function () {
+        // let getVal = JSON.parse(localStorage.getItem("cast"));
+        //
+        let invenName = localStorage.getItem("invenName")
+        let locateName = localStorage.getItem("locateName")
+        let facilityName = localStorage.getItem("facilityName")
+        let installName = localStorage.getItem("installName")
+
+
+        let invenNameID = document.getElementById("invenName");
+        let locateNameID = document.getElementById("locateName");
+        let facilityNameID = document.getElementById("facilityName");
+        let installNameID = document.getElementById("installName");
+
+        selectedControl(invenNameID, invenName);
+        selectedControl(locateNameID, locateName);
+        selectedControl(facilityNameID, facilityName);
+        selectedControl(installNameID, installName);
+
+        invenNameID.setAttribute("value", invenName);
+        locateNameID.setAttribute("value", locateName);
+        facilityNameID.setAttribute("value", facilityName);
+        installNameID.setAttribute("value", installName);
+
+
+        // localStorage.getItem("count")
+        if (localStorage.getItem("count") == "1") {
+            localStorage.setItem("count", "0");
+            document.findOne.submit();
+
+        }
+
+
+    }
+
+
+    function f_click(target) {
+        let tbody = target.parentNode;
+        let trs = tbody.getElementsByTagName('tr');
+
+
+        let backColor = "#ffffff";
+        let textColor = "black";
+        let orgBColor = "gray";
+        let orgTColor = "#ffffff";
+
+
+        for (let i = 0; i < trs.length; i++) {
+            if (trs[i] != target) {
+                trs[i].style.backgroundColor = backColor;
+                trs[i].style.color = textColor;
+            } else {
+                trs[i].style.backgroundColor = orgBColor;
+                trs[i].style.color = orgTColor;
+
+                delKey = i;
+                str = trs[i].innerText;
+
+            }
+        }
+
+        let words = str.split('\t');
+
+        //alert(words);
+
+        const tmp1 = document.getElementById("gradePoor");
+        tmp1.setAttribute('placeholder', words.at(6));
+        tmp1.setAttribute('value', words.at(6));
+
+        const tmp2 = document.getElementById("gradeBad");
+        tmp2.setAttribute('placeholder', words.at(7));
+        tmp2.setAttribute('value', words.at(7));
+        //selectedControl(tmp2,words.at(8))
+
+        const tmp3 = document.getElementById("gradeGeneral");
+        tmp3.setAttribute('placeholder', words.at(8));
+        tmp3.setAttribute('value', words.at(8));
+        //selectedControl(tmp3,words.at(9))
+
+        const tmp4 = document.getElementById("gradeGood");
+        tmp4.setAttribute('placeholder', words.at(9));
+        tmp4.setAttribute('value', words.at(9));
+        //selectedControl(tmp4,words.at(10))
+
+        const tmp5 = document.getElementById("gradeExcel");
+        tmp5.setAttribute('placeholder', words.at(10));
+        tmp5.setAttribute('value', words.at(10));
+
+
+        let delKeyStr = trs[delKey].innerHTML;
+        let parsingDel1 = delKeyStr.slice(delKeyStr.indexOf('none'), delKeyStr.lastIndexOf('td>'))
+        delKeySeq = parsingDel1.slice(parsingDel1.indexOf('>') + 1, parsingDel1.lastIndexOf('<'))
+
+        // alert(delKeySeq)
+
+
+        const tmp12 = document.getElementById("lifeCycleSeqHiddenR");
+        tmp12.setAttribute('placeholder', delKeySeq);
+        tmp12.setAttribute('value', delKeySeq);
+
+        const tmp13 = document.getElementById("evaluationItemName");
+        selectedControl(tmp13,words.at(4));
+        // tmp13.setAttribute('value', words.at(5));
+        // tmp13.setAttribute('selected', words.at(5));
+        selectToInput()
+    }
+
+    function selectedControl(tempId, tempWord) {
+        //const el = document.getElementById('fruit');  //select box
+        const len = tempId.options.length; //select box의 option 갯수
+        const str = tempWord; //입력 받은 value 값
+        //select box의 option 갯수만큼 for문 돌림
+        for (let i = 0; i < len; i++) {
+            //select box의 option value가 입력 받은 value의 값과 일치할 경우 selected
+            if (tempId.options[i].value == str) {
+                tempId.options[i].selected = true;
+            }
+        }
+    }
+
+    function deleteRow() {
+        // table element 찾기
+        const table = document.getElementById('facilityInfo');
+
+        // 행(Row) 삭제
+        if (delKey != null)
+            table.deleteRow(delKey + 1);
+
+        let obj = new Object();
+        obj.lifeCycleSeq = delKeySeq;
+        objRegister.d.push(obj);
+
+    }
+
+    function facilityRegisterOpen() {
+        let section_02 = document.getElementById("section_02");
+        section_02.style.display = "block";
+    }
+
+    function facilityRegisterClose() {
+        let section_02 = document.getElementById("section_02");
+        section_02.style.display = "none";
+    }
+
+
+    function register() {
+        if ($("#gradePoor").val() && $("#gradeBad").val() && $("#gradeGeneral").val() && $("#gradeGood").val() && $("#gradeExcel").val()) {
+            let obj = new Object();
+            let infoSeq = new Object();
+
+            let ItemName = $("#evaluationItemName").val();
+            infoSeq.infoSeq = infoSeqTransfer;
+
+            obj.lifeCycleSeq = $("#lifeCycleSeqHiddenR").val();
+            obj.gradePoor = $("#gradePoor").val();
+            obj.gradeBad = $("#gradeBad").val();//$("#gradeBad").val();
+            obj.gradeGeneral = $("#gradeGeneral").val();//$("#gradeGeneral").val();
+            obj.gradeGood = $("#gradeGood").val();//$("#gradeGood").val();
+            obj.gradeExcel = $("#gradeExcel").val();//$("#gradeExcel").val();
+            obj.unit = $("#unit").val()
+            obj.evaluationItemName = ItemName;
+            obj.infoSeq = infoSeq;
+
+            if (ItemName == "유량")
+                obj.evaluationItemCode = "gr01"
+            else if (ItemName == "압력")
+                obj.evaluationItemCode = "gr02"
+            else if (ItemName == "펌프효율")
+                obj.evaluationItemCode = "gr03"
+            else if (ItemName == "모터효율")
+                obj.evaluationItemCode = "gr04"
+            else if (ItemName == "진동")
+                obj.evaluationItemCode = "gr05"
+            else if (ItemName == "전압")
+                obj.evaluationItemCode = "gr06"
+            else if (ItemName == "전압불평등")
+                obj.evaluationItemCode = "gr07"
+            else if (ItemName == "전류불평등")
+                obj.evaluationItemCode = "gr08"
+            else if (ItemName == "과전류")
+                obj.evaluationItemCode = "gr09"
+            else if (ItemName == "RUN-OUT Upper Shaft")
+                obj.evaluationItemCode = "gr10"
+            else if (ItemName == "RUN-OUT Lower Shaft")
+                obj.evaluationItemCode = "gr11"
+            else if (ItemName == "RUN-OUT Motor Shaft")
+                obj.evaluationItemCode = "gr12"
+            else if (ItemName == "절연저항")
+                obj.evaluationItemCode = "gr13"
+            else if (ItemName == "서지검사")
+                obj.evaluationItemCode = "gr14"
+            else if (ItemName == "육안검사(부식/긁힘)")
+                obj.evaluationItemCode = "gr15"
+            else if (ItemName == "마모/치수")
+                obj.evaluationItemCode = "gr16"
+            else if (ItemName == "비파괴시험")
+                obj.evaluationItemCode = "gr17"
+
+            objRegister.c.push(obj);
+            alert("등록완료 하시려면 DB반영 버튼을 눌러주세요");
+            facilityRegisterClose();
+        } else {
+            alert("비어있는 값을 선택해주세요");
+        }
+    }
+
+    function registerDB() {
+
+
+        $.ajax({
+            url: "/facilityEvaluationGrades:bulk-update",
+            type: "POST",
+            //traditional: true, // ajax 배열 넘기기 옵션
+            dataType: "json",
+            processData: true,
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(objRegister),
+            //data: {"objRegister" : objRegister},
+            success: function (data) {
+                if (data == 1) {
+                    alert("등록 성공");
+                } else {
+                    alert("등록 실패!");
+                }
+            }
+        });
+        setTimeout("location.reload()", 300);
+
+    }
+
+    function reset() {
+        window.location.href = "http://localhost:8080/facilityEvaluationGrades";
+    }
+
+    function newRegister() {
+        document.getElementById("lifeCycleSeqHiddenR").setAttribute('value', null); // string 형태는 못 받음. 숫자는 같은 infoSeq 값을바꿈. null로 해결
+
+        facilityRegisterOpen();
+    }
+
+    function selectToInput() {
+        let str = $("#evaluationItemName option:selected").val();
+        let unitA = document.getElementById("unit");
+
+        if (str === "유량")
+            unitA.setAttribute("value", "t/h");
+        else if (str === "압력")
+            unitA.setAttribute("value", "㎫");
+        else if (str === "펌프효율")
+            unitA.setAttribute("value", "%");
+        else if (str === "모터효율")
+            unitA.setAttribute("value", "%");
+        else if (str === "진동")
+            unitA.setAttribute("value", "mm/s");
+        else if (str === "전압")
+            unitA.setAttribute("value", "v");
+        else if (str === "전압불평등")
+            unitA.setAttribute("value", "%");
+        else if (str === "전류불평등")
+            unitA.setAttribute("value", "%");
+        else if (str === "과전류")
+            unitA.setAttribute("value", "%");
+        else if (str === 'Run-Out-Motor Rotor')
+            unitA.setAttribute("value", "mm/m")
+        // else if (str === "Run-Out Upper Shaft")
+        //     unitA.setAttribute("value", "mm");
+        // else if (str === "Run-Out Lower Shaft")
+        //     unitA.setAttribute("value", "mm");
+        // else if (str === "Run-Out Motor Shaft")
+        //     unitA.setAttribute("value", "mm");
+        else if (str === "절연저항")
+            unitA.setAttribute("value", "M Ohm");
+        else if (str === "서지검사")
+            unitA.setAttribute("value", "v");
+        else if (str === "육안검사(부식/긁힘)")
+            unitA.setAttribute("value", "-");
+        else if (str === "마모/치수")
+            unitA.setAttribute("value", "mm");
+        else if (str === "비파괴시험")
+            unitA.setAttribute("value", "-");
+
+    }
+
+</script>
+
+</html>

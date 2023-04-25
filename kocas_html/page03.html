@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+  <link href="assets/css/atg_style.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">KOGAS_CS</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+
+
+  </header><!-- End Header -->
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+
+      <li class="nav-item d-block d-lg-none">
+        <a class="nav-link nav-icon search-bar-toggle " href="#">
+          <i class="bi bi-search"></i>
+        </a>
+      </li><!-- End Search Icon-->
+
+      <li class="nav-item dropdown">
+
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-bell"></i>
+          <span class="badge bg-primary badge-number">4</span>
+        </a><!-- End Notification Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+          <li class="dropdown-header">
+            You have 4 new notifications
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-exclamation-circle text-warning"></i>
+            <div>
+              <h4>Lorem Ipsum</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>30 min. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-x-circle text-danger"></i>
+            <div>
+              <h4>Atque rerum nesciunt</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>1 hr. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-check-circle text-success"></i>
+            <div>
+              <h4>Sit rerum fuga</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>2 hrs. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="notification-item">
+            <i class="bi bi-info-circle text-primary"></i>
+            <div>
+              <h4>Dicta reprehenderit</h4>
+              <p>Quae dolorem earum veritatis oditseno</p>
+              <p>4 hrs. ago</p>
+            </div>
+          </li>
+
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li class="dropdown-footer">
+            <a href="#">Show all notifications</a>
+          </li>
+
+        </ul><!-- End Notification Dropdown Items -->
+
+      </li><!-- End Notification Nav -->
+
+      <li class="nav-item dropdown">
+
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-chat-left-text"></i>
+          <span class="badge bg-success badge-number">3</span>
+        </a><!-- End Messages Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <li class="dropdown-header">
+            You have 3 new messages
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="message-item">
+            <a href="#">
+              <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+              <div>
+                <h4>Maria Hudson</h4>
+                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="message-item">
+            <a href="#">
+              <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+              <div>
+                <h4>Anna Nelson</h4>
+                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                <p>6 hrs. ago</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="message-item">
+            <a href="#">
+              <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+              <div>
+                <h4>David Muldon</h4>
+                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                <p>8 hrs. ago</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li class="dropdown-footer">
+            <a href="#">Show all messages</a>
+          </li>
+
+        </ul><!-- End Messages Dropdown Items -->
+
+      </li><!-- End Messages Nav -->
+
+      <li class="nav-item dropdown pe-3">
+
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+          <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+        </a><!-- End Profile Iamge Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>Kevin Anderson</h6>
+            <span>Web Designer</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <i class="bi bi-person"></i>
+              <span>My Profile</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <i class="bi bi-gear"></i>
+              <span>Account Settings</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+              <i class="bi bi-question-circle"></i>
+              <span>Need Help?</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+
+        </ul><!-- End Profile Dropdown Items -->
+      </li><!-- End Profile Nav -->
+
+    </ul>
+  </nav><!-- End Icons Navigation -->
+
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>입력/수정/조회</span></i>
+        </a>
+        <!-- <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="components-alerts.html">
+              <i class="bi bi-circle"></i><span>Alerts</span>
+            </a>
+          </li>
+        </ul> -->
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>설비기준정보</span>
+        </a>
+        <!-- <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+      
+        </ul> -->
+      </li><!-- End Charts Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-clipboard-check"></i><span>설비평가항목별</span>
+        </a>
+        <!-- <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="icons-bootstrap.html">
+              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+            </a>
+          </li>
+        </ul> -->
+      </li><!-- End Icons Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-graph-up"></i><span>수명평가항목별 가중치</span>
+        </a>
+        <!-- <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="icons-bootstrap.html">
+              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+            </a>
+          </li>
+        </ul> -->
+      </li><!-- End Icons Nav -->
+
+    </ul>
+  </aside><!-- End Sidebar-->
+
+
+  <!--main-->
+  <main id="main" class="main">
+    <section class="section">
+      <div class="row">
+
+        <!--기본정보 조회-->
+        <div class="col-lg-12" id="section_01">
+          <h2 class="title mt20">수명평가항목별 가중치</h2>
+          <div class="card mt20">
+            <div class="card-body">
+              <h3 class="title">설비별 수명평가항목 가중치 설문지</h3>
+              <div class="row col-md-4 box">
+                <label class="col-form-label label_name">설비명</label>
+                <div class="col-12"> <select class="form-select" aria-label="Default select">
+                    <option selected="">HP LNG 펌프</option>
+                    <option value="1">LP LNG펌프</option>
+                    <option value="2">BOG 압축기</option>
+                    <option value="3">해수펌프</option>
+                    <option value="4">해수식 기화기</option>
+                  </select></div>
+              </div>
+              <div class="row col-md-4 box">
+                <label class="col-form-label label_name">설치형태</label>
+                <div class="col-12"> <select class="form-select" aria-label="Default select">
+                    <option selected="">공통</option>
+                    <option value="1">외부식</option>
+                    <option value="2">잠액식</option>
+                  </select></div>
+              </div>
+             
+              <div class="button_box justify-content-center mt20">
+                <button type="button" class="btn btn-primary">조회</button>
+                <button type="button" class="btn btn btn-secondary">초기화</button>
+
+              </div><!--button_box-->
+            </div>
+            <!--//card-body-->
+          </div>
+        </div>
+        <!--// 기본정보 조회_section_01-->
+
+
+    
+      <!-- 데이터 테이블 -->
+      <div class="col-lg-12" id="section_03">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="title">수명평가항목별 가중치 설문결과 등록</h3>
+            <!--등급테이블-->
+            <div id="data_table">
+              <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                <div class="dataTable-top">
+
+                  <div class="button_wrap">
+                    <button type="button" class="btn btn-sign">등록</button>
+                    <button type="button" class="btn btn-info">수정</button>
+                    <button type="button" class="btn btn btn-secondary">초기화</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <!--테이블-->
+              <div class="dataTable-container">
+                <table class="table datatable dataTable-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter num">NO</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">기지명</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">위치</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">설비명</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">설치형태</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">수명평가항목</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">단위</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">매우나쁨</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">나쁨</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">보통</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">좋음</a></th>
+                      <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">매우좋음</a></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row" class="num">1</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                      <td>제작사</td>
+                      <td>100hz</td>
+                      <td>≤ 90</td>
+                      <td>≤ 92.5</td>
+                      <td>≤ 95</td>
+                      <td>≤ 98</td>
+                      <td>100</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="num">2</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                      <td>제작사</td>
+                      <td>100hz</td>
+                      <td>≤ 90</td>
+                      <td>≤ 92.5</td>
+                      <td>≤ 95</td>
+                      <td>≤ 98</td>
+                      <td>100</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="num">3</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                      <td>제작사</td>
+                      <td>100hz</td>
+                      <td>≤ 90</td>
+                      <td>≤ 92.5</td>
+                      <td>≤ 95</td>
+                      <td>≤ 98</td>
+                      <td>100</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="num">4</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                      <td>제작사</td>
+                      <td>100hz</td>
+                      <td>≤ 90</td>
+                      <td>≤ 92.5</td>
+                      <td>≤ 95</td>
+                      <td>≤ 98</td>
+                      <td>100</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="num">5</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                      <td>제작사</td>
+                      <td>100hz</td>
+                      <td>≤ 90</td>
+                      <td>≤ 92.5</td>
+                      <td>≤ 95</td>
+                      <td>≤ 98</td>
+                      <td>100</td>
+                    </tr> 
+                  </tbody>
+                </table>
+              </div>
+
+              <nav id="data_table_page">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination justify-content-center mt50">
+                    <li class="page-item"> <a class="page-link" href="#" aria-label="Previous"> <span
+                          aria-hidden="true">«</span> </a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"> <a class="page-link" href="#" aria-label="Next"> <span
+                          aria-hidden="true">»</span> </a></li>
+                  </ul>
+                </nav>
+              </nav>
+              <!--//data_table_page-->
+
+
+            </div>
+            <!--//data_table-->
+          </div>
+          <!--//card-body-->
+        </div>
+      </div>
+      <!--//테이블_section_03-->
+      </div>
+      </div>
+    </section>
+    <!--//class="section"-->
+
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>ATG.Co.,Ltd Inc.</span></strong>
+    </div>
+  </footer><!-- End Footer -->
+
+
+  </div>
+
+
+
+
+
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
